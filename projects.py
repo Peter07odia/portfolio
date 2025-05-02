@@ -13,67 +13,66 @@ def get_projects():
     """
     projects = [
         {
-            "id": "ai-agent-assistant",
-            "title": "AI Agent Assistant",
-            "category": "AI Agent",
-            "description": "An autonomous AI agent that assists with complex tasks by breaking them down into manageable steps. The agent can research, synthesize information, and execute tasks with minimal human supervision.",
-            "tech_stack": ["Python", "LangChain", "OpenAI API", "Pinecone", "FastAPI"],
+            "id": "e-commerce-fitting-room",
+            "title": "E-Commerce Virtual Fitting Room",
+            "category": "AI Product Design",
+            "description": "AI-powered virtual fitting room application for e-commerce that allows customers to visualize clothing items on their body type without physical try-ons.",
+            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision"],
             "highlights": [
-                "Context-aware task planning and execution",
-                "Memory and knowledge management",
-                "Autonomous decision-making with human feedback loops",
-                "Multi-modal interactions (text, voice, image)"
-            ],
-            "interactive": True,
-            "demo_type": "chat",
-            "image_class": "agent-image"
-        },
-        {
-            "id": "llm-fine-tuning",
-            "title": "Domain-Specific LLM Adaptation",
-            "category": "Language Model",
-            "description": "A specialized system for adapting large language models to domain-specific tasks with minimal training data through efficient fine-tuning techniques and prompt engineering.",
-            "tech_stack": ["PyTorch", "HuggingFace Transformers", "PEFT", "LoRA", "QLoRA"],
-            "highlights": [
-                "Parameter-efficient fine-tuning methods",
-                "Domain adaptation with < 1000 examples",
-                "Advanced prompt engineering framework",
-                "95% performance of full fine-tuning at 1% of the cost"
-            ],
-            "interactive": False,
-            "image_class": "llm-image"
-        },
-        {
-            "id": "content-generator",
-            "title": "AI Content Studio",
-            "category": "Content Generation",
-            "description": "An end-to-end solution for creating, editing, and optimizing content across multiple formats using AI. Generates blog posts, social media content, and marketing copy with brand voice consistency.",
-            "tech_stack": ["Next.js", "OpenAI API", "Vercel AI SDK", "Tailwind CSS", "PostgreSQL"],
-            "highlights": [
-                "Consistent brand voice across all generated content",
-                "Multi-format content generation (text, images, snippets)",
-                "SEO optimization built into generation process",
-                "Content performance analytics and improvement suggestions"
+                "Realistic garment visualization on different body types",
+                "Size recommendation based on user measurements",
+                "Integration with e-commerce platforms",
+                "Enhanced shopping experience with reduced returns"
             ],
             "interactive": True,
             "demo_type": "generator",
-            "image_class": "content-image"
+            "image_class": "ecommerce-image"
         },
         {
-            "id": "conversational-assistant",
-            "title": "Specialized Customer Support Bot",
-            "category": "Chatbot",
-            "description": "An advanced conversational AI that provides technical support for SaaS products. Features context retention, personalized responses, and seamless human handoff capabilities.",
-            "tech_stack": ["Python", "Rasa", "TensorFlow", "MongoDB", "WebSockets"],
+            "id": "prompt-engineering-system",
+            "title": "Generative Media Workflow System",
+            "category": "Prompt Engineering",
+            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including Midjourney, DALL·E, and Kling AI to generate consistent brand-aligned visual content.",
+            "tech_stack": ["Make.com", "Midjourney", "DALL·E", "Kling AI", "n8n"],
             "highlights": [
-                "Long-context memory for multi-turn conversations",
-                "Intent classification with 97% accuracy",
-                "Sentiment analysis for customer satisfaction monitoring",
-                "Automated escalation protocols to human support"
+                "Template-based prompt generation for brand consistency",
+                "Style and aesthetic control across different AI platforms",
+                "Asset management and organization workflow",
+                "Batch processing for marketing campaigns"
+            ],
+            "interactive": False,
+            "image_class": "prompt-image"
+        },
+        {
+            "id": "api-integration-hub",
+            "title": "AI Services Integration Hub",
+            "category": "API Integration",
+            "description": "A central platform for connecting and orchestrating various AI services via their APIs, enabling seamless workflows between OpenAI, Perplexity, PiAPI and other providers.",
+            "tech_stack": ["React", "Node.js", "OpenAI API", "Perplexity API", "PiAPI", "Google OAuth"],
+            "highlights": [
+                "Unified authentication and credential management",
+                "Error handling and response normalization",
+                "Cost tracking and usage optimization",
+                "Customizable workflow templates for common use cases"
             ],
             "interactive": True,
-            "demo_type": "chat",
-            "image_class": "chatbot-image"
+            "demo_type": "generator",
+            "image_class": "api-image"
+        },
+        {
+            "id": "lead-generation-pipeline",
+            "title": "AI-Powered Lead Generation System",
+            "category": "Data Automation",
+            "description": "An automated pipeline for lead scraping, validation, and enrichment that leverages AI to identify and qualify potential business prospects across various platforms.",
+            "tech_stack": ["Python", "SQL", "AWS", "Google Sheets API", "Make.com"],
+            "highlights": [
+                "Intelligent lead qualification based on multiple criteria",
+                "Automated data cleaning and normalization",
+                "Email verification and contact information enrichment",
+                "CRM integration and campaign tagging"
+            ],
+            "interactive": False,
+            "image_class": "data-image"
         }
     ]
     

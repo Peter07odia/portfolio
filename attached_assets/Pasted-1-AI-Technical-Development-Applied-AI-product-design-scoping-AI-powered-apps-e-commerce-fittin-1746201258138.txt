@@ -1,0 +1,48 @@
+1. AI & Technical Development
+Applied AI product design – scoping AI‑powered apps (e‑commerce fitting room, “Colors of Life,” NVIDIA VSS safety agent).
+
+Prompt engineering & generative‑media workflows – writing image/clip prompts for Midjourney, DALL·E, Kling AI; refining outputs for brand use.
+
+API integration & troubleshooting – OpenAI, Perplexity, PiAPI, Make.com/n8n, Google OAuth, Vercel + Firebase deployments.
+
+Early‑stage web dev – basic HTML/CSS/JS (≤ 1 year experience), SVG→PNG asset handling, GitHub pushes.
+
+Data automation & lead scraping – designing lead‑gen and validation pipelines, Google Sheets automation, email list prep.
+
+Basic scripting / workflow logic – structuring JSON configs, error‑trace debugging, parameter tuning.
+
+2. Entrepreneurship & Product Strategy
+Startup ideation & MVP road‑mapping – fashion tech, home‑decor AR, AI safety analytics.
+
+Go‑to‑market planning – identifying core value props, defining user journeys (virtual try‑on, triage‑first healthcare flow).
+
+Investor‑readiness – pitch‑deck framing, revenue modeling, VC language.
+
+Cost‑saving / process‑improvement proposals – e.g., ideas to cut expenses at GM.
+
+3. Marketing, Growth & Content Creation
+Social media strategy – TikTok & Instagram growth tactics, trend surfing (e.g., Azul challenge), hashtag research.
+
+UGC & brand collaborations – rate negotiation, media‑kit planning, product‑focused storytelling.
+
+Copywriting & ad creative – snappy hooks, Problem‑Action‑Reward captions, platform‑specific tone (LinkedIn vs. Facebook vs. X).
+
+Email campaigns & affiliate funnels – daily‑send cadence planning (1 k‑5 k emails), nurture sequences, offer positioning.
+
+SEO & bio optimization – action‑driven keyword use for socials and websites.
+
+4. Design & Multimedia
+Visual direction – briefing favicon/logo tweaks, gold‑theme brand assets.
+
+Video storyboard & scene blocking – multi‑angle short‑form action scripts (alien‑robot gunfight, cinematic clip lists).
+
+Infographic ideation – concise number‑driven layouts, color‑palette guidance.
+
+5. Soft & Transferable Skills
+Problem‑solving under ambiguity – frequent debugging of failed API calls and workflow mis‑wires.
+
+Iterative collaboration – requesting refinements, giving rapid feedback loops.
+
+Communication – simplifying technical ideas for varied audiences, blending professional & conversational tones.
+
+Entrepreneurial hustle & learning agility – continually exploring new niches (gold IRA, day trading, fashion tech).
