@@ -14,50 +14,57 @@ def get_projects():
     projects = [
         {
             "id": "e-commerce-fitting-room",
-            "title": "E-Commerce Virtual Fitting Room",
+            "title": "Fashion Tech Virtual Try-On",
             "category": "AI Product Design",
             "description": "AI-powered virtual fitting room application for e-commerce that allows customers to visualize clothing items on their body type without physical try-ons.",
-            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision"],
+            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision", "Kling AI"],
             "highlights": [
                 "Realistic garment visualization on different body types",
                 "Size recommendation based on user measurements",
                 "Integration with e-commerce platforms",
-                "Enhanced shopping experience with reduced returns"
+                "Enhanced shopping experience with style Feed"
             ],
             "interactive": True,
             "demo_type": "generator",
             "image_class": "ecommerce-image"
         },
         {
-            "id": "prompt-engineering-system",
-            "title": "Generative Media Workflow System",
-            "category": "Prompt Engineering",
-            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including Midjourney, DALL·E, and Kling AI to generate consistent brand-aligned visual content.",
-            "tech_stack": ["Make.com", "Midjourney", "DALL·E", "Kling AI", "n8n"],
+            "id": "AI-Agents",
+            "title": "Automated Media Workflow System",
+            "category": "Agentic WorkFlow",
+            "description": "A comprehensive Agent system for Generating, refining, and distributing high Quality Content to various social media platforms using Automation and Agents framework Like n8n, and AI models including GPT-1-image, and Kling AI to generate consistent brand-aligned visual content.",
+            "tech_stack": ["GPT-1-image API", "LLMs", "JINA DeepSearch", "Kling AI", "n8n"],
             "highlights": [
                 "Template-based prompt generation for brand consistency",
-                "Style and aesthetic control across different AI platforms",
-                "Asset management and organization workflow",
+                "High Quality content generation on Autopilot",
+                "Human in the loop feedback connection with Slack",
                 "Batch processing for marketing campaigns"
             ],
             "interactive": False,
             "image_class": "prompt-image"
         },
         {
-            "id": "api-integration-hub",
-            "title": "AI Services Integration Hub",
-            "category": "API Integration",
-            "description": "A central platform for connecting and orchestrating various AI services via their APIs, enabling seamless workflows between OpenAI, Perplexity, PiAPI and other providers.",
-            "tech_stack": ["React", "Node.js", "OpenAI API", "Perplexity API", "PiAPI", "Google OAuth"],
-            "highlights": [
-                "Unified authentication and credential management",
-                "Error handling and response normalization",
-                "Cost tracking and usage optimization",
-                "Customizable workflow templates for common use cases"
-            ],
-            "interactive": True,
-            "demo_type": "generator",
-            "image_class": "api-image"
+          "id": "nvidia-vss-safety-analytics",
+          "title": "AI‑Powered Safety Analytics Engine",
+          "category": "Video Analytics & Summarization",
+          "description": "A system that taps NVIDIA’s Video Search & Summarization (VSS) Agent to scan live CCTV, drone, and body‑cam feeds for safety‑critical events, deliver natural‑language search across archives, and auto‑compose concise incident reports for EHS (Environment, Health & Safety) teams.",
+          "tech_stack": [
+            "NVIDIA VSS API",
+            "Python (FastAPI micro‑services)",
+            "Docker & NVIDIA Container Runtime",
+            "Kafka / MQTT (real‑time message bus)",
+            "PostgreSQL + TimescaleDB (event store)",
+            "OpenAI GPT (narrative incident summaries)",
+            "Grafana / Prometheus (metrics & alerting)"
+          ],
+          "highlights": [
+            "Real‑time detection of slips, PPE violations, near‑misses, and restricted‑area breaches",
+            "Natural‑language video search (e.g., “worker without hard hat on Line 3 yesterday 14:00‑16:00”)",
+            "Automatic clip trimming and storyboard generation for rapid review",
+            "Daily digest reports with risk scoring and remediation suggestions powered by GPT",
+            "Scalable edge‑to‑cloud deployment: run VSS inference at the edge, push only indexed metadata upstream",
+            "Role‑based dashboard for safety managers, enabling trend charts and regulatory audit exports"
+          ]
         },
         {
             "id": "lead-generation-pipeline",
