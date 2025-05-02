@@ -1,0 +1,131 @@
+<section id="projects" class="projects-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <div class="projects-container">
+            {% for project in projects %}
+            <div class="project-card glass-card fade-in" data-project-id="{{ project.id }}">
+                <div class="project-content">
+                    <div class="project-header">
+                        <div class="project-category">{{ project.category }}</div>
+                        <h3 class="project-title">{{ project.title }}</h3>
+                    </div>
+                    
+                    <p class="project-description">{{ project.description }}</p>
+                    
+                    <div class="project-tech">
+                        {% for tech in project.tech_stack %}
+                        <span class="tech-badge">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="project-highlights">
+                        <h4>Key Features</h4>
+                        <ul>
+                            {% for highlight in project.highlights %}
+                            <li>{{ highlight }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    
+                    <div class="project-actions">
+                        {% if project.interactive %}
+                        <button class="primary-btn open-demo" data-project-id="{{ project.id }}" data-demo-type="{{ project.demo_type }}">
+                            Interactive Demo
+                            <i data-feather="play"></i>
+                        </button>
+                        {% endif %}
+                        <button class="secondary-btn details-btn">
+                            View Details
+                            <i data-feather="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="project-visual">
+                    <div class="project-image {{ project.image_class }}">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Project Demo Modal -->
+    <div class="modal" id="project-demo-modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="demo-title">Interactive Demo</h3>
+                <button class="close-modal">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body">
+                <!-- Chat Demo Content -->
+                <div class="demo-content chat-demo" id="chat-demo">
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message system">
+                            <p>Welcome to the AI Assistant demo. Type a message to get started.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <input type="text" id="chat-input-field" placeholder="Type your message here...">
+                        <button id="send-message-btn">
+                            <i data-feather="send"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Generator Demo Content -->
+                <div class="demo-content generator-demo" id="generator-demo">
+                    <div class="generator-form">
+                        <div class="form-group">
+                            <label for="content-type">Content Type</label>
+                            <select id="content-type">
+                                <option value="blog">Blog Post</option>
+                                <option value="social">Social Media Post</option>
+                                <option value="email">Email Campaign</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="content-topic">Topic</label>
+                            <input type="text" id="content-topic" placeholder="Enter your topic">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="content-style">Tone/Style</label>
+                            <select id="content-style">
+                                <option value="professional">Professional</option>
+                                <option value="casual">Casual</option>
+                                <option value="enthusiastic">Enthusiastic</option>
+                                <option value="informative">Informative</option>
+                            </select>
+                        </div>
+                        
+                        <button id="generate-content-btn" class="primary-btn">
+                            Generate Content
+                        </button>
+                    </div>
+                    
+                    <div class="generator-output">
+                        <h4>Generated Content</h4>
+                        <div id="generated-content" class="content-display">
+                            <p class="placeholder">Your generated content will appear here...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="demo-disclaimer">
+                    <p>Note: This is a simulated demo. In a production environment, these would connect to actual AI models.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

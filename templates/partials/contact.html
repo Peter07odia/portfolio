@@ -1,0 +1,84 @@
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <div class="contact-container">
+            <div class="contact-info fade-in">
+                <h3>Let's Collaborate</h3>
+                <p class="contact-intro">Interested in working together on an AI project? Have questions about my work? I'd love to hear from you.</p>
+                
+                <div class="contact-methods">
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i data-feather="mail"></i>
+                        </div>
+                        <div class="method-details">
+                            <h4>Email</h4>
+                            <p>hello@aiportfolio.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i data-feather="map-pin"></i>
+                        </div>
+                        <div class="method-details">
+                            <h4>Location</h4>
+                            <p>San Francisco, CA</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-method">
+                        <div class="method-icon">
+                            <i data-feather="linkedin"></i>
+                        </div>
+                        <div class="method-details">
+                            <h4>LinkedIn</h4>
+                            <p>linkedin.com/in/aiportfolio</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="availability glass-card">
+                    <h4>Current Availability</h4>
+                    <p>Available for consulting and select project opportunities</p>
+                    <div class="availability-indicator">
+                        <span class="indicator-dot available"></span>
+                        <span>Open for discussions</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form-container fade-in">
+                <div class="form-wrapper glass-card">
+                    <h3>Send a Message</h3>
+                    
+                    <form id="contact-form" class="contact-form" action="{{ url_for('send_message') }}" method="POST">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="Your email address" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" placeholder="How can I help you?" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="primary-btn submit-btn">
+                            Send Message
+                            <i data-feather="send"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
