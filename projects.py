@@ -14,57 +14,50 @@ def get_projects():
     projects = [
         {
             "id": "e-commerce-fitting-room",
-            "title": "Fashion Tech Virtual Try-On",
+            "title": "E-Commerce Virtual Fitting Room",
             "category": "AI Product Design",
             "description": "AI-powered virtual fitting room application for e-commerce that allows customers to visualize clothing items on their body type without physical try-ons.",
-            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision", "Kling AI"],
+            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision"],
             "highlights": [
                 "Realistic garment visualization on different body types",
                 "Size recommendation based on user measurements",
                 "Integration with e-commerce platforms",
-                "Enhanced shopping experience with style Feed"
+                "Enhanced shopping experience with reduced returns"
             ],
             "interactive": True,
             "demo_type": "generator",
             "image_class": "ecommerce-image"
         },
         {
-            "id": "generative-media-workflow",
+            "id": "prompt-engineering-system",
             "title": "Generative Media Workflow System",
-            "category": "Agentic WorkFlow",
-            "description": "A comprehensive Agent system for Generating, refining, and distributing high Quality Content to various social media platforms using Automation and Agents framework Like n8n, and AI models including GPT-1-image, and Kling AI to generate consistent brand-aligned visual content.",
-            "tech_stack": ["GPT-1-image API", "LLMs", "JINA DeepSearch", "Kling AI", "n8n"],
+            "category": "Prompt Engineering",
+            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including Midjourney, DALL·E, and Kling AI to generate consistent brand-aligned visual content.",
+            "tech_stack": ["Make.com", "Midjourney", "DALL·E", "Kling AI", "n8n"],
             "highlights": [
                 "Template-based prompt generation for brand consistency",
-                "High Quality content generation on Autopilot",
-                "Human in the loop feedback connection with Slack",
+                "Style and aesthetic control across different AI platforms",
+                "Asset management and organization workflow",
                 "Batch processing for marketing campaigns"
             ],
             "interactive": False,
             "image_class": "prompt-image"
         },
         {
-          "id": "ai-services-integration-hub",
-          "title": "AI Services Integration Hub",
-          "category": "API Integration",
-          "description": "A central platform for connecting and orchestrating various AI services via their APIs, enabling seamless workflows between OpenAI, Perplexity, PiAPI and other providers.",
-          "tech_stack": [
-            "React", 
-            "Node.js", 
-            "OpenAI API", 
-            "Perplexity API", 
-            "PiAPI", 
-            "Google OAuth"
-          ],
-          "highlights": [
-            "Unified authentication and credential management",
-            "Error handling and response normalization",
-            "Cost tracking and usage optimization",
-            "Customizable workflow templates for common use cases"
-          ],
-          "interactive": true,
-          "demo_type": "generator",
-          "image_class": "api-image"
+            "id": "api-integration-hub",
+            "title": "AI Services Integration Hub",
+            "category": "API Integration",
+            "description": "A central platform for connecting and orchestrating various AI services via their APIs, enabling seamless workflows between OpenAI, Perplexity, PiAPI and other providers.",
+            "tech_stack": ["React", "Node.js", "OpenAI API", "Perplexity API", "PiAPI", "Google OAuth"],
+            "highlights": [
+                "Unified authentication and credential management",
+                "Error handling and response normalization",
+                "Cost tracking and usage optimization",
+                "Customizable workflow templates for common use cases"
+            ],
+            "interactive": True,
+            "demo_type": "generator",
+            "image_class": "api-image"
         },
         {
             "id": "lead-generation-pipeline",
