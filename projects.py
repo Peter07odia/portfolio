@@ -29,8 +29,8 @@ def get_projects():
             "image_class": "ecommerce-image"
         },
         {
-            "id": "AI-Agents",
-            "title": "Automated Media Workflow System",
+            "id": "generative-media-workflow",
+            "title": "Generative Media Workflow System",
             "category": "Agentic WorkFlow",
             "description": "A comprehensive Agent system for Generating, refining, and distributing high Quality Content to various social media platforms using Automation and Agents framework Like n8n, and AI models including GPT-1-image, and Kling AI to generate consistent brand-aligned visual content.",
             "tech_stack": ["GPT-1-image API", "LLMs", "JINA DeepSearch", "Kling AI", "n8n"],
