@@ -1,0 +1,87 @@
+{% extends 'admin/layout.html' %}
+
+{% block head %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card">
+        <h3 class="stat-number">{{ visitor_count }}</h3>
+        <p class="stat-title">Total Visitors</p>
+    </div>
+    
+    <div class="stat-card">
+        <h3 class="stat-number">{{ contact_count }}</h3>
+        <p class="stat-title">Contact Submissions</p>
+    </div>
+</div>
+
+<div class="admin-card">
+    <h2>Visitor Traffic</h2>
+    <p>Visitor trends over time</p>
+    
+    <div class="chart-container">
+        <canvas id="visitorChart"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // Format the visitor data for Chart.js
+    const visitorData = [
+        {% for date, count in visitors_by_date %}
+            { date: '{{ date }}', count: {{ count }} },
+        {% endfor %}
+    ];
+    
+    // Create visitor chart
+    const ctx = document.getElementById('visitorChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: visitorData.map(item => item.date),
+            datasets: [{
+                label: 'Daily Visitors',
+                data: visitorData.map(item => item.count),
+                backgroundColor: 'rgba(112, 0, 255, 0.2)',
+                borderColor: 'rgba(112, 0, 255, 1)',
+                borderWidth: 2,
+                tension: 0.3,
+                pointBackgroundColor: 'rgba(112, 0, 255, 1)'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.05)'
+                    },
+                    ticks: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        color: 'rgba(255, 255, 255, 0.7)'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
