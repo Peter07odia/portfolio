@@ -32,8 +32,8 @@ def get_projects():
             "id": "prompt-engineering-system",
             "title": "Generative Media Workflow System",
             "category": "Prompt Engineering",
-            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including Midjourney, DALL·E, and Kling AI to generate consistent brand-aligned visual content.",
-            "tech_stack": ["Make.com", "Midjourney", "DALL·E", "Kling AI", "n8n"],
+            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including GitHub, Vercel, and Firebase to generate consistent brand-aligned visual content.",
+            "tech_stack": ["Make.com", "GitHub", "Vercel", "Firebase", "n8n"],
             "highlights": [
                 "Template-based prompt generation for brand consistency",
                 "Style and aesthetic control across different AI platforms",
