@@ -1,6 +1,6 @@
 /* Gallery Header Styles */
 .gallery-header {
-    padding: var(--space-xxl) 0 var(--space-lg);
+    padding: calc(var(--space-xxl) + 80px) 0 var(--space-lg);
     background-color: var(--bg-color);
     text-align: center;
 }
