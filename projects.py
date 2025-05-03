@@ -17,7 +17,7 @@ def get_projects():
             "title": "E-Commerce Virtual Fitting Room",
             "category": "AI Product Design",
             "description": "AI-powered virtual fitting room application for e-commerce that allows customers to visualize clothing items on their body type without physical try-ons.",
-            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision" "Kling API"],
+            "tech_stack": ["Python", "React", "AWS", "OpenAI API", "Computer Vision", "Kling API"],
             "highlights": [
                 "Realistic garment visualization on different body types",
                 "Size recommendation based on user measurements",
