@@ -237,3 +237,26 @@ def admin_gallery():
     gallery_images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
     
     return render_template("admin/gallery.html", gallery_images=gallery_images)
+
+@app.route("/admin/gallery/delete/<int:image_id>", methods=["POST"])
+def delete_gallery_image(image_id):
+    """Delete a gallery image"""
+    # This would typically have authentication
+    image = GalleryImage.query.get_or_404(image_id)
+    
+    try:
+        # Delete the image file from the filesystem
+        file_path = os.path.join(app.static_folder, 'images/ai-gallery', image.filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        
+        # Delete the database record
+        db.session.delete(image)
+        db.session.commit()
+        
+        flash("Image deleted successfully", "success")
+    except Exception as e:
+        app.logger.error(f"Error deleting image: {e}")
+        flash("An error occurred while deleting the image", "error")
+    
+    return redirect(url_for("admin_gallery"))

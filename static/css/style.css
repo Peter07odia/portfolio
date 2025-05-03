@@ -1177,6 +1177,64 @@ section {
     text-decoration: underline;
 }
 
+/* Gallery Preview Section Styles */
+.gallery-preview-section {
+    padding: var(--space-xxl) 0;
+    background-color: var(--bg-color);
+}
+
+.gallery-preview {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.gallery-preview-card {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('/static/images/ai-gallery/gallery-preview-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    position: relative;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: var(--space-xl);
+}
+
+.gallery-preview-content {
+    max-width: 500px;
+    z-index: 2;
+}
+
+.gallery-preview-content h3 {
+    font-family: 'Clash Display', sans-serif;
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-white);
+}
+
+.gallery-preview-content p {
+    color: var(--text-color-light);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: var(--space-lg);
+}
+
+@media (max-width: 768px) {
+    .gallery-preview-card {
+        padding: var(--space-lg);
+    }
+    
+    .gallery-preview-content h3 {
+        font-size: 1.6rem;
+    }
+    
+    .gallery-preview-content p {
+        font-size: 1rem;
+    }
+}
+
 /* Contact Section */
 .contact-container {
     display: grid;
