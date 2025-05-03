@@ -24,11 +24,12 @@
                 <label for="category">Category *</label>
                 <select id="category" name="category" required>
                     <option value="" {% if not image.category %}selected{% endif %}>Select a category</option>
+                    <option value="technology" {% if image.category == 'technology' %}selected{% endif %}>Technology</option>
+                    <option value="nature" {% if image.category == 'nature' %}selected{% endif %}>Nature</option>
+                    <option value="architecture" {% if image.category == 'architecture' %}selected{% endif %}>Architecture</option>
+                    <option value="art-style" {% if image.category == 'art-style' %}selected{% endif %}>Art Style</option>
+                    <option value="characters" {% if image.category == 'characters' %}selected{% endif %}>Characters</option>
                     <option value="conceptual" {% if image.category == 'conceptual' %}selected{% endif %}>Conceptual</option>
-                    <option value="abstract" {% if image.category == 'abstract' %}selected{% endif %}>Abstract</option>
-                    <option value="product" {% if image.category == 'product' %}selected{% endif %}>Product</option>
-                    <option value="landscape" {% if image.category == 'landscape' %}selected{% endif %}>Landscape</option>
-                    <option value="portrait" {% if image.category == 'portrait' %}selected{% endif %}>Portrait</option>
                     <option value="other" {% if image.category == 'other' %}selected{% endif %}>Other</option>
                 </select>
             </div>

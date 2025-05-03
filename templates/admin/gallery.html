@@ -7,6 +7,7 @@
     <!-- Top Navigation -->
     <div class="admin-nav">
         <a href="{{ url_for('bulk_import_gallery_images') }}" class="admin-btn">Bulk Import Images</a>
+        <a href="{{ url_for('find_duplicate_images') }}" class="admin-btn find-duplicates">Find Duplicates</a>
     </div>
     
     <!-- Add Image Form -->
@@ -27,11 +28,12 @@
                 <label for="category">Category *</label>
                 <select id="category" name="category" required>
                     <option value="">Select a category</option>
+                    <option value="technology">Technology</option>
+                    <option value="nature">Nature</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="art-style">Art Style</option>
+                    <option value="characters">Characters</option>
                     <option value="conceptual">Conceptual</option>
-                    <option value="abstract">Abstract</option>
-                    <option value="product">Product</option>
-                    <option value="landscape">Landscape</option>
-                    <option value="portrait">Portrait</option>
                     <option value="other">Other</option>
                 </select>
             </div>
@@ -109,7 +111,16 @@
     .admin-nav {
         display: flex;
         justify-content: flex-end;
+        gap: 10px;
         margin-bottom: 20px;
+    }
+    
+    .admin-btn.find-duplicates {
+        background-color: #2c6694;
+    }
+    
+    .admin-btn.find-duplicates:hover {
+        background-color: #1c5684;
     }
     
     .admin-thumbnail {

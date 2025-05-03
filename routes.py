@@ -6,6 +6,8 @@ from models import Contact, Project, TechStack, Highlight, Visitor, GalleryImage
 from werkzeug.utils import secure_filename
 import os
 import json
+import imagehash
+from PIL import Image
 from datetime import datetime
 
 @app.route("/")
@@ -347,3 +349,104 @@ def bulk_import_gallery_images():
         return redirect(url_for("admin_gallery"))
     
     return render_template("admin/bulk_import.html")
+
+@app.route("/admin/gallery/find-duplicates", methods=["GET", "POST"])
+def find_duplicate_images():
+    """Find and optionally remove duplicate images based on visual similarity"""
+    # This would typically have authentication
+    duplicate_sets = []
+    images_processed = 0
+    duplicates_found = 0
+    
+    if request.method == "POST":
+        # If duplicates are found and user confirms deletion
+        if "confirm_delete" in request.form:
+            duplicate_ids = request.form.getlist("duplicate_ids")
+            
+            if duplicate_ids:
+                for image_id in duplicate_ids:
+                    image = GalleryImage.query.get(int(image_id))
+                    if image:
+                        # Delete the image file
+                        file_path = os.path.join(app.static_folder, 'images/ai-gallery', image.filename)
+                        if os.path.exists(file_path):
+                            os.remove(file_path)
+                        
+                        # Delete the database record
+                        db.session.delete(image)
+                
+                db.session.commit()
+                flash(f"{len(duplicate_ids)} duplicate images removed successfully", "success")
+            else:
+                flash("No images were selected for removal", "warning")
+            
+            return redirect(url_for("admin_gallery"))
+        
+        # If user initiated duplicate search
+        if "find_duplicates" in request.form:
+            similarity_threshold = int(request.form.get("similarity_threshold", 90))
+            min_similarity = similarity_threshold / 100.0
+            
+            # Get all gallery images
+            gallery_images = GalleryImage.query.all()
+            
+            # Calculate image hashes for all images
+            image_hashes = []
+            valid_images = []
+            
+            for image in gallery_images:
+                file_path = os.path.join(app.static_folder, 'images/ai-gallery', image.filename)
+                if os.path.exists(file_path):
+                    try:
+                        img = Image.open(file_path)
+                        hash_value = imagehash.phash(img)
+                        image_hashes.append({
+                            'id': image.id,
+                            'filename': image.filename,
+                            'title': image.title,
+                            'category': image.category,
+                            'hash': hash_value
+                        })
+                        valid_images.append(image)
+                    except Exception as e:
+                        app.logger.error(f"Error processing image {image.filename}: {e}")
+            
+            images_processed = len(image_hashes)
+            
+            # Find duplicates
+            processed_ids = set()
+            
+            for i in range(len(image_hashes)):
+                # Skip if this image was already processed as a duplicate
+                if image_hashes[i]['id'] in processed_ids:
+                    continue
+                    
+                duplicates = []
+                
+                for j in range(i + 1, len(image_hashes)):
+                    # Skip if this image was already processed as a duplicate
+                    if image_hashes[j]['id'] in processed_ids:
+                        continue
+                        
+                    # Calculate similarity (1.0 = identical, 0.0 = completely different)
+                    hash1 = image_hashes[i]['hash']
+                    hash2 = image_hashes[j]['hash']
+                    similarity = 1.0 - (hash1 - hash2) / len(hash1.hash) ** 2
+                    
+                    if similarity >= min_similarity:
+                        if not duplicates:  # Add the original image to the set if this is the first duplicate
+                            duplicates.append(image_hashes[i])
+                        
+                        duplicates.append(image_hashes[j])
+                        processed_ids.add(image_hashes[j]['id'])
+                
+                if duplicates:
+                    duplicate_sets.append(duplicates)
+                    duplicates_found += len(duplicates) - 1  # Don't count the original image
+    
+    return render_template(
+        "admin/find_duplicates.html", 
+        duplicate_sets=duplicate_sets,
+        images_processed=images_processed,
+        duplicates_found=duplicates_found
+    )
