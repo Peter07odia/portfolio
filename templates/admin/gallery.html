@@ -4,6 +4,11 @@
 <div class="admin-container">
     <h1>Gallery Management</h1>
     
+    <!-- Top Navigation -->
+    <div class="admin-nav">
+        <a href="{{ url_for('bulk_import_gallery_images') }}" class="admin-btn">Bulk Import Images</a>
+    </div>
+    
     <!-- Add Image Form -->
     <div class="admin-section">
         <h2>Add New Image</h2>
@@ -98,6 +103,12 @@
 </div>
 
 <style>
+    .admin-nav {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+    }
+    
     .admin-thumbnail {
         width: 80px;
         height: 60px;

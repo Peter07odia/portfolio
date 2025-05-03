@@ -1,4 +1,4 @@
-from flask import render_template, request, jsonify, flash, redirect, url_for
+from flask import render_template, request, jsonify, flash, redirect, url_for, session
 from app import app, mail, db
 from flask_mail import Message
 from projects import get_projects
@@ -260,3 +260,102 @@ def delete_gallery_image(image_id):
         flash("An error occurred while deleting the image", "error")
     
     return redirect(url_for("admin_gallery"))
+
+@app.route("/admin/gallery/bulk-import", methods=["GET", "POST"])
+def bulk_import_gallery_images():
+    """Bulk import multiple images to gallery"""
+    # This would typically have authentication
+    if request.method == "POST":
+        # Check if any files were provided
+        if 'images' not in request.files:
+            flash("Please select images to upload", "error")
+            return redirect(url_for("bulk_import_gallery_images"))
+        
+        files = request.files.getlist('images')
+        
+        # Check if any files were selected
+        if not files or files[0].filename == '':
+            flash("No images selected", "error")
+            return redirect(url_for("bulk_import_gallery_images"))
+        
+        # Save files to temporary folder for categorization
+        temp_files = []
+        
+        for file in files:
+            if file and file.filename != '':
+                # Save the file
+                filename = secure_filename(file.filename)
+                # Ensure unique filename by adding timestamp
+                timestamp = int(datetime.utcnow().timestamp())
+                unique_filename = f"{timestamp}_{filename}"
+                file_path = os.path.join(app.static_folder, 'images/ai-gallery', unique_filename)
+                file.save(file_path)
+                temp_files.append({
+                    'original_name': filename,
+                    'unique_name': unique_filename,
+                    'path': file_path
+                })
+        
+        if not temp_files:
+            flash("No valid images were found in your selection", "error")
+            return redirect(url_for("bulk_import_gallery_images"))
+            
+        # Store temp files in session for categorization step
+        session_files = [{
+            'original_name': f['original_name'],
+            'unique_name': f['unique_name']
+        } for f in temp_files]
+        
+        session['temp_files'] = session_files
+        
+        return redirect(url_for("categorize_gallery_images"))
+    
+    return render_template("admin/bulk_import.html")
+
+@app.route("/admin/gallery/categorize", methods=["GET", "POST"])
+def categorize_gallery_images():
+    """Categorize bulk imported images"""
+    # This would typically have authentication
+    if 'temp_files' not in session or not session['temp_files']:
+        flash("No images found for categorization", "error")
+        return redirect(url_for("bulk_import_gallery_images"))
+    
+    if request.method == "POST":
+        # Process categorization form
+        successfully_imported = 0
+        
+        for file_data in session['temp_files']:
+            unique_name = file_data['unique_name']
+            title = request.form.get(f"title_{unique_name}", "")
+            category = request.form.get(f"category_{unique_name}", "")
+            description = request.form.get(f"description_{unique_name}", "")
+            tool = request.form.get(f"tool_{unique_name}", "")
+            
+            if title and category:  # Required fields
+                # Create new gallery image record
+                new_image = GalleryImage(
+                    filename=unique_name,
+                    title=title,
+                    description=description,
+                    category=category,
+                    tool=tool
+                )
+                
+                db.session.add(new_image)
+                successfully_imported += 1
+        
+        if successfully_imported > 0:
+            db.session.commit()
+            flash(f"{successfully_imported} images were successfully added to the gallery", "success")
+        else:
+            flash("No images were imported - please provide at least title and category for each image", "error")
+            
+        # Clear the session data
+        session.pop('temp_files', None)
+        
+        return redirect(url_for("admin_gallery"))
+    
+    # Get the temp files from session
+    temp_files = session['temp_files']
+    
+    return render_template("admin/categorize.html", files=temp_files)

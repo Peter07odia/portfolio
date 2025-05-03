@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html' %}
+
+{% block content %}
+<div class="admin-container">
+    <h1>Bulk Import Gallery Images</h1>
+    
+    <div class="admin-section">
+        <p>Upload multiple images at once and then categorize them in the next step.</p>
+        
+        <form action="{{ url_for('bulk_import_gallery_images') }}" method="post" enctype="multipart/form-data" class="admin-form">
+            <div class="form-group">
+                <label for="images">Select Multiple Images *</label>
+                <input type="file" id="images" name="images" accept="image/*" multiple required>
+                <small>Hold Ctrl (or Cmd on Mac) to select multiple files. Supported formats: JPG, PNG, WEBP (Max 5MB per file)</small>
+            </div>
+            
+            <div class="form-actions">
+                <a href="{{ url_for('admin_gallery') }}" class="admin-btn secondary">Cancel</a>
+                <button type="submit" class="admin-btn">Upload & Continue</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+    }
+    
+    .admin-btn.secondary {
+        background-color: #666;
+    }
+    
+    .admin-btn.secondary:hover {
+        background-color: #555;
+    }
+</style>
+{% endblock %}
