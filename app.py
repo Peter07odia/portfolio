@@ -20,6 +20,8 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SESSION_SECRET", "your-development-key")
 # Disable template caching
 app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.jinja_env.auto_reload = True
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0  # Prevent browser from caching static files
 
 # Configure database
 database_url = os.environ.get("DATABASE_URL")
