@@ -261,9 +261,36 @@ def delete_gallery_image(image_id):
     
     return redirect(url_for("admin_gallery"))
 
+@app.route("/admin/gallery/edit/<int:image_id>", methods=["GET", "POST"])
+def edit_gallery_image(image_id):
+    """Edit a gallery image details"""
+    # This would typically have authentication
+    image = GalleryImage.query.get_or_404(image_id)
+    
+    if request.method == "POST":
+        # Update image details
+        title = request.form.get("title")
+        category = request.form.get("category")
+        
+        if not title or not category:
+            flash("Title and category are required", "error")
+            return redirect(url_for("edit_gallery_image", image_id=image_id))
+        
+        # Update the image record
+        image.title = title
+        image.description = request.form.get("description", "")
+        image.category = category
+        image.tool = request.form.get("tool", "")
+        
+        db.session.commit()
+        flash("Image details updated successfully", "success")
+        return redirect(url_for("admin_gallery"))
+    
+    return render_template("admin/edit_image.html", image=image)
+
 @app.route("/admin/gallery/bulk-import", methods=["GET", "POST"])
 def bulk_import_gallery_images():
-    """Bulk import multiple images to gallery"""
+    """Bulk import multiple images to gallery directly with default categorization"""
     # This would typically have authentication
     if request.method == "POST":
         # Check if any files were provided
@@ -278,67 +305,34 @@ def bulk_import_gallery_images():
             flash("No images selected", "error")
             return redirect(url_for("bulk_import_gallery_images"))
         
-        # Save files to temporary folder for categorization
-        temp_files = []
+        # Get default category and tool from form
+        default_category = request.form.get("default_category", "other")
+        default_tool = request.form.get("default_tool", "")
+        
+        # Process all files directly
+        successfully_imported = 0
         
         for file in files:
             if file and file.filename != '':
                 # Save the file
-                filename = secure_filename(file.filename)
+                original_filename = secure_filename(file.filename)
                 # Ensure unique filename by adding timestamp
                 timestamp = int(datetime.utcnow().timestamp())
-                unique_filename = f"{timestamp}_{filename}"
+                unique_filename = f"{timestamp}_{original_filename}"
                 file_path = os.path.join(app.static_folder, 'images/ai-gallery', unique_filename)
                 file.save(file_path)
-                temp_files.append({
-                    'original_name': filename,
-                    'unique_name': unique_filename,
-                    'path': file_path
-                })
-        
-        if not temp_files:
-            flash("No valid images were found in your selection", "error")
-            return redirect(url_for("bulk_import_gallery_images"))
-            
-        # Store temp files in session for categorization step
-        session_files = [{
-            'original_name': f['original_name'],
-            'unique_name': f['unique_name']
-        } for f in temp_files]
-        
-        session['temp_files'] = session_files
-        
-        return redirect(url_for("categorize_gallery_images"))
-    
-    return render_template("admin/bulk_import.html")
-
-@app.route("/admin/gallery/categorize", methods=["GET", "POST"])
-def categorize_gallery_images():
-    """Categorize bulk imported images"""
-    # This would typically have authentication
-    if 'temp_files' not in session or not session['temp_files']:
-        flash("No images found for categorization", "error")
-        return redirect(url_for("bulk_import_gallery_images"))
-    
-    if request.method == "POST":
-        # Process categorization form
-        successfully_imported = 0
-        
-        for file_data in session['temp_files']:
-            unique_name = file_data['unique_name']
-            title = request.form.get(f"title_{unique_name}", "")
-            category = request.form.get(f"category_{unique_name}", "")
-            description = request.form.get(f"description_{unique_name}", "")
-            tool = request.form.get(f"tool_{unique_name}", "")
-            
-            if title and category:  # Required fields
-                # Create new gallery image record
+                
+                # Generate title from filename (remove extension, replace underscores and hyphens with spaces)
+                base_name = os.path.splitext(original_filename)[0]
+                title = base_name.replace('_', ' ').replace('-', ' ').title()
+                
+                # Create new gallery image record with default values
                 new_image = GalleryImage(
-                    filename=unique_name,
+                    filename=unique_filename,
                     title=title,
-                    description=description,
-                    category=category,
-                    tool=tool
+                    description="",  # Empty description by default
+                    category=default_category,
+                    tool=default_tool
                 )
                 
                 db.session.add(new_image)
@@ -348,14 +342,8 @@ def categorize_gallery_images():
             db.session.commit()
             flash(f"{successfully_imported} images were successfully added to the gallery", "success")
         else:
-            flash("No images were imported - please provide at least title and category for each image", "error")
-            
-        # Clear the session data
-        session.pop('temp_files', None)
+            flash("No valid images were found in your selection", "error")
         
         return redirect(url_for("admin_gallery"))
     
-    # Get the temp files from session
-    temp_files = session['temp_files']
-    
-    return render_template("admin/categorize.html", files=temp_files)
+    return render_template("admin/bulk_import.html")
