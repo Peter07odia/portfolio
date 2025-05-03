@@ -149,7 +149,7 @@ function setupChatDemo() {
             return "For billing inquiries, you can:<br><br>1. Access your billing dashboard from your account settings<br>2. View all past invoices and payment history<br>3. Update payment methods if needed<br>4. Set up automatic payments<br><br>Would you like me to connect you with our billing department for specific questions?";
         }
         else if (lowerMsg.includes('feature') || lowerMsg.includes('how to') || lowerMsg.includes('use')) {
-            return "I'd be happy to help you learn how to use our features. Our product includes:<br><br>- Automated workflows<br>- Data visualization tools<br>- Team collaboration spaces<br>- Custom integrations<br><br>Which specific feature would you like to learn more about?";
+            return "I'd be happy to help you learn how to use our features. Our product includes:<br><br>• Automated workflows<br>• Data visualization tools<br>• Team collaboration spaces<br>• Custom integrations<br><br>Which specific feature would you like to learn more about?";
         }
         else if (lowerMsg.includes('bug') || lowerMsg.includes('issue') || lowerMsg.includes('not working')) {
             return "I'm sorry to hear you're experiencing an issue. Let me help troubleshoot:<br><br>1. Could you describe exactly what's happening?<br>2. What browser and device are you using?<br>3. Have you tried clearing your cache?<br><br>If the problem persists, I can escalate this to our technical support team.";
@@ -217,7 +217,7 @@ function setupContentGeneratorDemo() {
     // Generate blog post content
     function generateBlogPost(topic, style) {
         const titles = {
-            'professional': `The Complete Guide to ${capitalize(topic)}: Best Practices for 2023`,
+            'professional': `The Complete Guide to ${capitalize(topic)}: Best Practices for 2025`,
             'casual': `Let's Talk About ${capitalize(topic)}: What You Need to Know`,
             'enthusiastic': `${capitalize(topic)} is Revolutionizing the Industry! Here's Why It Matters`,
             'informative': `Understanding ${capitalize(topic)}: A Comprehensive Analysis`
