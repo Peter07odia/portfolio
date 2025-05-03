@@ -1,0 +1,45 @@
+<section id="gallery" class="gallery-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">AI Image Gallery</h2>
+            <div class="section-line"></div>
+        </div>
+        
+        <p class="gallery-intro">Explore my collection of AI-generated imagery showcasing the creative potential of modern AI image generation tools.</p>
+        
+        <div class="gallery-filter">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="conceptual">Conceptual</button>
+            <button class="filter-btn" data-filter="abstract">Abstract</button>
+            <button class="filter-btn" data-filter="product">Product</button>
+            <button class="filter-btn" data-filter="landscape">Landscape</button>
+        </div>
+        
+        <div class="gallery-container">
+            <!-- Gallery items will be populated dynamically from the database -->
+            {% for image in gallery_images %}
+            <div class="gallery-item glass-card fade-in" data-category="{{ image.category }}">
+                <div class="gallery-image">
+                    <img src="{{ url_for('static', filename='images/ai-gallery/' + image.filename) }}" alt="{{ image.title }}">
+                </div>
+                <div class="gallery-info">
+                    <h3>{{ image.title }}</h3>
+                    <p>{{ image.description }}</p>
+                    <div class="gallery-meta">
+                        <span class="tool">Tool: {{ image.tool }}</span>
+                        <span class="date">{{ image.created_at.strftime('%B %Y') }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="gallery-empty-state" {% if gallery_images %}style="display: none"{% endif %}>
+            <div class="empty-state-message glass-card">
+                <i data-feather="image"></i>
+                <h3>No images found</h3>
+                <p>Images will appear here once uploaded to the gallery.</p>
+            </div>
+        </div>
+    </div>
+</section>
