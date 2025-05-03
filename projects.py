@@ -29,19 +29,31 @@ def get_projects():
             "image_class": "ecommerce-image"
         },
         {
-            "id": "prompt-engineering-system",
-            "title": "Generative Media Workflow System",
-            "category": "Prompt Engineering",
-            "description": "A comprehensive system for writing, refining, and managing prompts for various AI models including GitHub, Vercel, and Firebase to generate consistent brand-aligned visual content.",
-            "tech_stack": ["Make.com", "GitHub", "Vercel", "Firebase", "n8n"],
-            "highlights": [
-                "Template-based prompt generation for brand consistency",
-                "Style and aesthetic control across different AI platforms",
-                "Asset management and organization workflow",
-                "Batch processing for marketing campaigns"
-            ],
-            "interactive": False,
-            "image_class": "prompt-image"
+          "id": "content-creating-agent-workflow",
+          "title": "Automated Content Agent Pipeline",
+          "category": "Workflow Automation",
+          "description": "An end‑to‑end n8n workflow that pulls ideas, auto‑generates multimedia content with AI, routes assets to the right platform, and logs performance data for continuous optimization.",
+          "tech_stack": [
+            "n8n",
+            "OpenAI API (text & image endpoints)",
+            "Kling AI (video generation)",
+            "PiAPI (image→video stitching)",
+            "Google Sheets & Drive",
+            "JINA AI (Deep Research Agent)",
+            "Vercel Serverless Functions",
+            "Firebase Firestore (asset/metric store)"
+          ],
+          "highlights": [
+            "Central Idea Queue → triggers AI copywriting & image prompts automatically",
+            "Conditional branches for TikTok, Instagram, X, LinkedIn formatting",
+            "Webhook‑based Midjourney & PiAPI calls with retry logic and timeout guards",
+            "Filename & folder conventions for robust asset management in Drive",
+            "Real‑time KPI logging (impressions, CTR) back to Firestore and Sheets",
+            "Slack/Discord alerts when a post or render fails, with auto‑re‑queue option",
+            "Automated posting to LinkedIn, Instagram, TikTok, and X"
+          ],
+          "interactive": False,
+          "image_class": "workflow-image"
         },
         {
             "id": "nvidia-vss-safety-analytics",
