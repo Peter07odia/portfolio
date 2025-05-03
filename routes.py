@@ -22,7 +22,38 @@ def index():
     db.session.add(visitor)
     db.session.commit()
     
-    # Get projects from the database if available, otherwise from the file
+    # Get fresh project data from the file (to ensure latest changes are shown)
+    fresh_projects = get_projects()
+    
+    # Delete existing projects in the database to force refresh
+    Project.query.delete()
+    db.session.commit()
+    
+    # Save fresh projects to database
+    for proj in fresh_projects:
+        new_project = Project(
+            project_id=proj['id'],
+            title=proj['title'],
+            category=proj['category'],
+            description=proj['description'],
+            interactive=proj['interactive'],
+            demo_type=proj.get('demo_type'),
+            image_class=proj.get('image_class')
+        )
+        
+        # Add tech stack
+        for tech in proj['tech_stack']:
+            new_project.tech_stack.append(TechStack(name=tech))
+        
+        # Add highlights
+        for highlight in proj['highlights']:
+            new_project.highlights.append(Highlight(text=highlight))
+        
+        db.session.add(new_project)
+    
+    db.session.commit()
+    
+    # Now fetch the updated projects from database
     db_projects = Project.query.all()
     
     if db_projects:
