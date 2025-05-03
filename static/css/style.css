@@ -228,6 +228,8 @@ section {
 
 /* Header Styles */
 .site-header {
+    display: block !important;
+    visibility: visible !important;
     position: fixed;
     top: 0;
     left: 0;
