@@ -1,0 +1,129 @@
+{% extends 'layout.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gallery.css') }}">
+{% endblock %}
+
+{% block content %}
+    <section class="gallery-header">
+        <div class="container">
+            <h1 class="page-title">AI Image Gallery</h1>
+            <p class="page-description">Explore my collection of AI-generated imagery showcasing the creative potential of modern AI image generation tools.</p>
+        </div>
+    </section>
+    
+    <section class="gallery-section">
+        <div class="container">
+            <div class="gallery-filter">
+                <button class="filter-btn active" data-filter="all">All</button>
+                {% for category in categories %}
+                    <button class="filter-btn" data-filter="{{ category }}">{{ category|title }}</button>
+                {% endfor %}
+                {% if not categories %}
+                    <button class="filter-btn" data-filter="conceptual">Conceptual</button>
+                    <button class="filter-btn" data-filter="abstract">Abstract</button>
+                    <button class="filter-btn" data-filter="product">Product</button>
+                    <button class="filter-btn" data-filter="landscape">Landscape</button>
+                {% endif %}
+            </div>
+            
+            <div class="gallery-container">
+                {% for image in gallery_images %}
+                <div class="gallery-item glass-card fade-in" data-category="{{ image.category }}">
+                    <div class="gallery-image">
+                        <img src="{{ url_for('static', filename='images/ai-gallery/' + image.filename) }}" alt="{{ image.title }}">
+                    </div>
+                    <div class="gallery-info">
+                        <h3>{{ image.title }}</h3>
+                        <p>{{ image.description }}</p>
+                        <div class="gallery-meta">
+                            {% if image.tool %}
+                                <span class="tool">Tool: {{ image.tool }}</span>
+                            {% endif %}
+                            <span class="date">{{ image.created_at.strftime('%B %Y') }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {% if not gallery_images %}
+            <div class="gallery-empty-state">
+                <div class="empty-state-message glass-card">
+                    <i data-feather="image"></i>
+                    <h3>No images found</h3>
+                    <p>Images will appear here once added to the gallery.</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Feather icons
+            if (typeof feather !== 'undefined') {
+                feather.replace();
+            }
+            
+            // Setup gallery filtering
+            setupGalleryFilter();
+            
+            // Initialize gallery animations
+            initGalleryAnimations();
+        });
+        
+        function setupGalleryFilter() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            if (!filterButtons.length || !galleryItems.length) return;
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.getAttribute('data-filter');
+                    
+                    // Show/hide gallery items based on filter
+                    galleryItems.forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+        
+        function initGalleryAnimations() {
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            
+            if (!galleryItems.length) return;
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // Add staggered delay based on index
+                        setTimeout(() => {
+                            entry.target.classList.add('appear');
+                        }, index * 100);
+                        
+                        // Unobserve after animation is added
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            // Observe each gallery item
+            galleryItems.forEach(item => {
+                observer.observe(item);
+            });
+        }
+    </script>
+{% endblock %}
