@@ -2,8 +2,11 @@ from flask import render_template, request, jsonify, flash, redirect, url_for
 from app import app, mail, db
 from flask_mail import Message
 from projects import get_projects
-from models import Contact, Project, TechStack, Highlight, Visitor
+from models import Contact, Project, TechStack, Highlight, Visitor, GalleryImage
+from werkzeug.utils import secure_filename
+import os
 import json
+from datetime import datetime
 
 @app.route("/")
 def index():
@@ -163,3 +166,74 @@ def admin_stats():
         contact_count=contact_count,
         visitors_by_date=visitors_by_date
     )
+
+@app.route("/gallery")
+def gallery():
+    """Render the AI image gallery page"""
+    # Track visitor
+    if request.headers.get('X-Forwarded-For'):
+        visitor_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()
+    else:
+        visitor_ip = request.remote_addr
+    
+    visitor = Visitor(
+        ip_address=visitor_ip,
+        user_agent=request.user_agent.string,
+        page_visited='gallery'
+    )
+    db.session.add(visitor)
+    db.session.commit()
+    
+    # Get gallery images from database
+    gallery_images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
+    
+    # Get unique categories for filter buttons
+    categories = db.session.query(GalleryImage.category).distinct().all()
+    categories = [category[0] for category in categories]
+    
+    return render_template("gallery.html", gallery_images=gallery_images, categories=categories)
+
+@app.route("/admin/gallery", methods=["GET", "POST"])
+def admin_gallery():
+    """Admin interface to manage gallery images"""
+    # This would typically have authentication
+    if request.method == "POST":
+        # Simple validation
+        title = request.form.get("title")
+        category = request.form.get("category")
+        
+        if not title or not category or 'image' not in request.files:
+            flash("Please fill out all fields and select an image", "error")
+            return redirect(url_for("admin_gallery"))
+        
+        image_file = request.files['image']
+        if image_file.filename == '':
+            flash("No image selected", "error")
+            return redirect(url_for("admin_gallery"))
+        
+        if image_file:
+            # Save the file
+            filename = secure_filename(image_file.filename)
+            # Ensure unique filename by adding timestamp
+            filename = f"{int(datetime.utcnow().timestamp())}_{filename}"
+            image_file.save(os.path.join(app.static_folder, 'images/ai-gallery', filename))
+            
+            # Create new gallery image record
+            new_image = GalleryImage(
+                filename=filename,
+                title=title,
+                description=request.form.get("description"),
+                category=category,
+                tool=request.form.get("tool")
+            )
+            
+            db.session.add(new_image)
+            db.session.commit()
+            
+            flash("Image added to gallery successfully", "success")
+            return redirect(url_for("admin_gallery"))
+    
+    # Get gallery images for display
+    gallery_images = GalleryImage.query.order_by(GalleryImage.created_at.desc()).all()
+    
+    return render_template("admin/gallery.html", gallery_images=gallery_images)
