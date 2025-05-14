@@ -854,6 +854,23 @@ section {
     font-weight: bold;
 }
 
+/* Modal and Demo Content Display */
+.modal-content {
+    width: 90%;
+    max-width: 1000px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: var(--space-lg);
+}
+
+.demo-content {
+    display: none;
+}
+
+.demo-content.active {
+    display: block;
+}
+
 .project-visual {
     display: flex;
     align-items: center;
