@@ -66,6 +66,24 @@
             </div>
             
             <div class="modal-body">
+                <!-- Carousel Demo Content -->
+                <div class="demo-content carousel-demo" id="carousel-demo">
+                    <div class="carousel-container">
+                        <div class="carousel-slide" id="carousel-slide">
+                            <!-- Carousel images will be populated by JavaScript -->
+                        </div>
+                        <button class="carousel-btn prev" id="carousel-prev">
+                            <i data-feather="chevron-left"></i>
+                        </button>
+                        <button class="carousel-btn next" id="carousel-next">
+                            <i data-feather="chevron-right"></i>
+                        </button>
+                        <div class="carousel-indicators" id="carousel-indicators">
+                            <!-- Indicators will be added via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Chat Demo Content -->
                 <div class="demo-content chat-demo" id="chat-demo">
                     <div class="chat-messages" id="chat-messages">
@@ -118,6 +136,36 @@
                         <h4>Generated Content</h4>
                         <div id="generated-content" class="content-display">
                             <p class="placeholder">Your generated content will appear here...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Details Content -->
+                <div class="demo-content project-details-demo" id="project-details-demo">
+                    <div class="project-details-container">
+                        <div class="project-details-header">
+                            <h4 id="project-details-title"></h4>
+                            <p id="project-details-description"></p>
+                        </div>
+                        
+                        <div class="project-details-section">
+                            <h5>Technology Stack</h5>
+                            <div id="project-details-tech" class="project-tech"></div>
+                        </div>
+                        
+                        <div class="project-details-section">
+                            <h5>Key Features</h5>
+                            <ul id="project-details-highlights"></ul>
+                        </div>
+                        
+                        <div class="project-details-section" id="project-benefits-section">
+                            <h5>Business Benefits</h5>
+                            <ul id="project-details-benefits"></ul>
+                        </div>
+                        
+                        <div class="project-details-section" id="project-partnership-section">
+                            <h5>Partnership Opportunities</h5>
+                            <p id="project-details-partnership"></p>
                         </div>
                     </div>
                 </div>

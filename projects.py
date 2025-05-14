@@ -24,9 +24,24 @@ def get_projects():
                 "Integration with e-commerce platforms",
                 "Enhanced shopping experience with reduced returns"
             ],
-            "interactive": True,
-            "demo_type": "generator",
-            "image_class": "ecommerce-image"
+            "interactive": False,
+            "demo_type": "carousel",
+            "image_class": "ecommerce-image",
+            "carousel_images": [
+                "colors_features.png",
+                "colors_catalog.png",
+                "colors_body_scan.png",
+                "colors_style_selection.png",
+                "colors_app_signup.png"
+            ],
+            "benefits": [
+                "Reduce return rates by up to 40% with accurate virtual try-ons",
+                "Increase conversion rates by 25% with personalized fitting",
+                "Enhance customer satisfaction with confidence in sizing",
+                "Save costs on physical inventory and returns processing",
+                "Collect valuable customer data for future product development"
+            ],
+            "partnership": "We're open to partnerships with fashion retailers, e-commerce platforms, and technology companies. Contact us to explore collaboration opportunities for implementing this technology in your business."
         },
         {
           "id": "content-creating-agent-workflow",
