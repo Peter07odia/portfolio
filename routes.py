@@ -287,6 +287,50 @@ def delete_gallery_image(image_id):
     
     return redirect(url_for("admin_gallery"))
 
+@app.route("/admin/gallery/bulk-delete", methods=["POST"])
+def bulk_delete_gallery_images():
+    """Delete multiple gallery images at once"""
+    # This would typically have authentication
+    selected_image_ids = request.form.getlist("selected_images")
+    
+    if not selected_image_ids:
+        flash("No images selected for deletion", "error")
+        return redirect(url_for("admin_gallery"))
+    
+    deleted_count = 0
+    error_count = 0
+    
+    for image_id in selected_image_ids:
+        try:
+            image = GalleryImage.query.get(image_id)
+            if image:
+                # Delete the image file from the filesystem
+                file_path = os.path.join(app.static_folder, 'images/ai-gallery', image.filename)
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                
+                # Delete the database record
+                db.session.delete(image)
+                deleted_count += 1
+            else:
+                error_count += 1
+        except Exception as e:
+            app.logger.error(f"Error deleting image ID {image_id}: {e}")
+            error_count += 1
+    
+    # Commit all successful deletions
+    if deleted_count > 0:
+        db.session.commit()
+    
+    if deleted_count > 0 and error_count == 0:
+        flash(f"Successfully deleted {deleted_count} image(s)", "success")
+    elif deleted_count > 0 and error_count > 0:
+        flash(f"Deleted {deleted_count} image(s), but failed to delete {error_count} image(s)", "warning")
+    else:
+        flash("Failed to delete any images", "error")
+    
+    return redirect(url_for("admin_gallery"))
+
 @app.route("/admin/gallery/edit/<int:image_id>", methods=["GET", "POST"])
 def edit_gallery_image(image_id):
     """Edit a gallery image details"""
