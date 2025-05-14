@@ -308,6 +308,9 @@ function setupContentGeneratorDemo() {
  */
 function setupProjectCards() {
     const projectCards = document.querySelectorAll('.project-card');
+    const modal = document.getElementById('project-demo-modal');
+    const demoTitle = document.getElementById('demo-title');
+    let carouselInterval;
     
     projectCards.forEach(card => {
         // Add hover effects
@@ -322,18 +325,222 @@ function setupProjectCards() {
             this.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.15)';
         });
         
-        // Handle "View Details" button click (in a real app, this would link to a detailed project page)
+        // Handle "View Details" button click to show project details
         const detailsBtn = card.querySelector('.details-btn');
         if (detailsBtn) {
             detailsBtn.addEventListener('click', function() {
                 // Get project ID
                 const projectId = card.getAttribute('data-project-id');
                 
-                // Alert for demo purposes (in a real app, this would navigate to a project detail page)
-                alert(`In a complete implementation, this would navigate to a detailed page for the ${projectId} project.`);
+                // Find this project in the data
+                fetch('/api/projects')
+                    .then(response => response.json())
+                    .then(projects => {
+                        const project = projects.find(p => p.id === projectId);
+                        if (!project) return;
+                        
+                        // Set modal title
+                        if (demoTitle) {
+                            demoTitle.textContent = project.title;
+                        }
+                        
+                        // Reset all content sections
+                        const demoContents = modal.querySelectorAll('.demo-content');
+                        demoContents.forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        
+                        // Show project details
+                        const detailsContent = document.getElementById('project-details-demo');
+                        if (detailsContent) {
+                            detailsContent.classList.add('active');
+                            
+                            // Fill in project details
+                            document.getElementById('project-details-title').textContent = project.title;
+                            document.getElementById('project-details-description').textContent = project.description;
+                            
+                            // Technology stack
+                            const techContainer = document.getElementById('project-details-tech');
+                            techContainer.innerHTML = '';
+                            project.tech_stack.forEach(tech => {
+                                const techBadge = document.createElement('span');
+                                techBadge.className = 'tech-badge';
+                                techBadge.textContent = tech;
+                                techContainer.appendChild(techBadge);
+                            });
+                            
+                            // Key highlights
+                            const highlightsList = document.getElementById('project-details-highlights');
+                            highlightsList.innerHTML = '';
+                            project.highlights.forEach(highlight => {
+                                const listItem = document.createElement('li');
+                                listItem.textContent = highlight;
+                                highlightsList.appendChild(listItem);
+                            });
+                            
+                            // Business benefits (if available)
+                            const benefitsSection = document.getElementById('project-benefits-section');
+                            if (project.benefits && project.benefits.length > 0) {
+                                benefitsSection.style.display = 'block';
+                                const benefitsList = document.getElementById('project-details-benefits');
+                                benefitsList.innerHTML = '';
+                                project.benefits.forEach(benefit => {
+                                    const listItem = document.createElement('li');
+                                    listItem.textContent = benefit;
+                                    benefitsList.appendChild(listItem);
+                                });
+                            } else {
+                                benefitsSection.style.display = 'none';
+                            }
+                            
+                            // Partnership opportunities (if available)
+                            const partnershipSection = document.getElementById('project-partnership-section');
+                            if (project.partnership) {
+                                partnershipSection.style.display = 'block';
+                                document.getElementById('project-details-partnership').textContent = project.partnership;
+                            } else {
+                                partnershipSection.style.display = 'none';
+                            }
+                            
+                            // If this project has carousel images, initialize that too
+                            if (project.carousel_images && project.carousel_images.length > 0) {
+                                // Show the carousel content
+                                const carouselContent = document.getElementById('carousel-demo');
+                                if (carouselContent) {
+                                    carouselContent.classList.add('active');
+                                    
+                                    // For the first project, auto-slide without buttons
+                                    const isFirstProject = (projectId === 'e-commerce-fitting-room');
+                                    setupCarousel(project.carousel_images, isFirstProject);
+                                }
+                            }
+                        }
+                        
+                        // Show modal
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling
+                    });
             });
         }
     });
+    
+    // Setup carousel functionality
+    function setupCarousel(images, autoSlideOnly = false) {
+        const carouselSlide = document.getElementById('carousel-slide');
+        const carouselIndicators = document.getElementById('carousel-indicators');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        let currentIndex = 0;
+        
+        // Hide navigation buttons for auto-slide only carousels
+        if (autoSlideOnly && prevBtn && nextBtn) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            carouselIndicators.style.display = 'none';
+        } else if (prevBtn && nextBtn) {
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+            carouselIndicators.style.display = 'flex';
+        }
+        
+        // Clear previous images and indicators
+        carouselSlide.innerHTML = '';
+        carouselIndicators.innerHTML = '';
+        
+        // Add images to carousel
+        images.forEach((image, index) => {
+            const img = document.createElement('img');
+            img.src = `/static/images/ai-gallery/${image}`;
+            img.alt = `Project image ${index + 1}`;
+            img.className = index === 0 ? 'carousel-image active' : 'carousel-image';
+            carouselSlide.appendChild(img);
+            
+            // Add indicator
+            const indicator = document.createElement('span');
+            indicator.className = index === 0 ? 'carousel-indicator active' : 'carousel-indicator';
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+            carouselIndicators.appendChild(indicator);
+        });
+        
+        // Function to show a specific slide
+        function showSlide(index) {
+            const carouselImages = carouselSlide.querySelectorAll('.carousel-image');
+            const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
+            
+            // Hide all images and deactivate indicators
+            carouselImages.forEach(img => img.classList.remove('active'));
+            indicators.forEach(ind => ind.classList.remove('active'));
+            
+            // Show current image and activate indicator
+            carouselImages[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentIndex = index;
+        }
+        
+        // Next button click
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                showSlide(currentIndex);
+            });
+        }
+        
+        // Previous button click
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                showSlide(currentIndex);
+            });
+        }
+        
+        // Auto-slide function
+        function autoSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+        
+        // Clear any existing interval
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+        }
+        
+        // Start auto-sliding
+        carouselInterval = setInterval(autoSlide, 5000);
+        
+        // Pause auto-slide on hover
+        carouselSlide.addEventListener('mouseenter', () => {
+            clearInterval(carouselInterval);
+        });
+        
+        // Resume auto-slide on mouse leave
+        carouselSlide.addEventListener('mouseleave', () => {
+            carouselInterval = setInterval(autoSlide, 5000);
+        });
+        
+        // Stop auto-slide when modal is closed
+        const closeBtn = modal.querySelector('.close-modal');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+            });
+        }
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                clearInterval(carouselInterval);
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                clearInterval(carouselInterval);
+            }
+        });
+    }
+}
     
     // Add staggered animation to project cards on scroll
     const observer = new IntersectionObserver((entries) => {

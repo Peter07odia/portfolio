@@ -64,6 +64,13 @@ def index():
     if db_projects:
         projects = []
         for project in db_projects:
+            # Get the original project data to fetch new properties not in the database yet
+            original_project = None
+            for proj in fresh_projects:
+                if proj['id'] == project.project_id:
+                    original_project = proj
+                    break
+            
             project_dict = {
                 'id': project.project_id,
                 'title': project.title,
@@ -75,6 +82,16 @@ def index():
                 'tech_stack': [tech.name for tech in project.tech_stack],
                 'highlights': [highlight.text for highlight in project.highlights]
             }
+            
+            # Add additional properties from original projects if they exist
+            if original_project:
+                if 'carousel_images' in original_project:
+                    project_dict['carousel_images'] = original_project['carousel_images']
+                if 'benefits' in original_project:
+                    project_dict['benefits'] = original_project['benefits']
+                if 'partnership' in original_project:
+                    project_dict['partnership'] = original_project['partnership']
+            
             projects.append(project_dict)
     else:
         # If no projects in DB, use the static list and save to DB for future use
@@ -168,6 +185,13 @@ def admin_stats():
         contact_count=contact_count,
         visitors_by_date=visitors_by_date
     )
+
+@app.route("/api/projects")
+def api_projects():
+    """API endpoint to get all projects with their data"""
+    # Get project data from file
+    projects_data = get_projects()
+    return jsonify(projects_data)
 
 @app.route("/gallery")
 def gallery():
