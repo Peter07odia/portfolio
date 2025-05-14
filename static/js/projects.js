@@ -402,8 +402,8 @@ function setupProjectCards() {
                                 partnershipSection.style.display = 'none';
                             }
                             
-                            // If this project has carousel images, always initialize carousel and show it first
-                            if (project.carousel_images && project.carousel_images.length > 0) {
+                            // If this project has carousel images, or is the E-Commerce Virtual Fitting Room, always initialize carousel and show it first
+                            if ((project.carousel_images && project.carousel_images.length > 0) || projectId === 'ecommerce-fitting-room') {
                                 // Show the carousel content at the top
                                 const carouselContent = document.getElementById('carousel-demo');
                                 if (carouselContent) {
@@ -415,12 +415,21 @@ function setupProjectCards() {
                                     
                                     carouselContent.classList.add('active');
                                     
-                                    // For the first project, auto-slide without buttons
-                                    const isFirstProject = (projectId === 'e-commerce-fitting-room');
-                                    setupCarousel(project.carousel_images, isFirstProject);
-                                    
-                                    // Add a console log for debugging
-                                    console.log('Carousel initialized with images:', project.carousel_images);
+                                    // For the E-Commerce Virtual Fitting Room project, use specific images and auto-slide without buttons
+                                    if (projectId === 'ecommerce-fitting-room') {
+                                        const fittingRoomImages = [
+                                            '/static/images/project-carousel/signup.png',
+                                            '/static/images/project-carousel/style-selection.png',
+                                            '/static/images/project-carousel/body-scan.png',
+                                            '/static/images/project-carousel/virtual-models.png',
+                                            '/static/images/project-carousel/try-before-buy.png'
+                                        ];
+                                        setupCarousel(fittingRoomImages, true);
+                                        console.log('Initialized E-Commerce Virtual Fitting Room carousel with specific images');
+                                    } else {
+                                        setupCarousel(project.carousel_images, false);
+                                        console.log('Carousel initialized with images:', project.carousel_images);
+                                    }
                                 }
                             }
                         }
