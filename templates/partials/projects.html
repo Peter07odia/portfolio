@@ -46,9 +46,24 @@
                 </div>
                 
                 <div class="project-visual">
+                    {% if project.id == 'ecommerce-fitting-room' %}
+                    <!-- Carousel for E-Commerce Virtual Fitting Room project -->
+                    <div class="project-carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-slide" id="project-carousel-{{ project.id }}">
+                                <img src="/static/images/project-carousel/try-before-buy.png" alt="Colors of Life App" class="carousel-image active">
+                                <img src="/static/images/project-carousel/virtual-models.png" alt="Virtual Models" class="carousel-image">
+                                <img src="/static/images/project-carousel/body-scan.png" alt="Body Scan" class="carousel-image">
+                                <img src="/static/images/project-carousel/style-selection.png" alt="Style Selection" class="carousel-image">
+                                <img src="/static/images/project-carousel/signup.png" alt="App Sign Up" class="carousel-image">
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
                     <div class="project-image {{ project.image_class }}">
                         <div class="image-overlay"></div>
                     </div>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}
