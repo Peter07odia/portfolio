@@ -468,11 +468,13 @@ function setupProjectCards() {
         // Add images to carousel - ensure they appear
         images.forEach((image, index) => {
             const img = document.createElement('img');
-            img.src = `/static/images/ai-gallery/${image}`;
+            // Check if the image path includes a full path (like /static/images/...)
+            img.src = image.startsWith('/') ? image : `/static/images/ai-gallery/${image}`;
             img.alt = `Project image ${index + 1}`;
             img.className = index === 0 ? 'carousel-image active' : 'carousel-image';
             img.style.maxWidth = '100%';
             img.style.height = 'auto';
+            img.style.objectFit = 'contain'; // Ensure image maintains aspect ratio
             img.onerror = () => {
                 console.error(`Failed to load image: ${image}`);
                 // Try to show a fallback or provide visual feedback
@@ -539,18 +541,23 @@ function setupProjectCards() {
             clearInterval(carouselInterval);
         }
         
+        // Determine the interval speed based on autoSlideOnly
+        const slideInterval = autoSlideOnly ? 3500 : 5000; // Faster for autoSlideOnly
+        
         // Start auto-sliding
-        carouselInterval = setInterval(autoSlide, 5000);
+        carouselInterval = setInterval(autoSlide, slideInterval);
         
-        // Pause auto-slide on hover
-        carouselSlide.addEventListener('mouseenter', () => {
-            clearInterval(carouselInterval);
-        });
-        
-        // Resume auto-slide on mouse leave
-        carouselSlide.addEventListener('mouseleave', () => {
-            carouselInterval = setInterval(autoSlide, 5000);
-        });
+        // Pause auto-slide on hover (only if not autoSlideOnly)
+        if (!autoSlideOnly) {
+            carouselSlide.addEventListener('mouseenter', () => {
+                clearInterval(carouselInterval);
+            });
+            
+            // Resume auto-slide on mouse leave
+            carouselSlide.addEventListener('mouseleave', () => {
+                carouselInterval = setInterval(autoSlide, slideInterval);
+            });
+        }
         
         // Stop auto-slide when modal is closed
         const closeBtn = modal.querySelector('.close-modal');
