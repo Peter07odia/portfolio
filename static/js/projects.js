@@ -541,24 +541,26 @@ function setupProjectCards() {
         });
     }
 }
-    
-    // Add staggered animation to project cards on scroll
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
-            if (entry.isIntersecting) {
-                // Add staggered delay based on index
-                setTimeout(() => {
-                    entry.target.classList.add('appear');
-                }, index * 100);
-                
-                // Unobserve after animation is added
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    
-    // Observe each project card
+
+// Add staggered animation to project cards on scroll
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+            // Add staggered delay based on index
+            setTimeout(() => {
+                entry.target.classList.add('appear');
+            }, index * 100);
+            
+            // Unobserve after animation is added
+            observer.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.1 });
+
+// Observe each project card
+document.addEventListener('DOMContentLoaded', () => {
+    const projectCards = document.querySelectorAll('.project-card');
     projectCards.forEach(card => {
         observer.observe(card);
     });
-}
+});
