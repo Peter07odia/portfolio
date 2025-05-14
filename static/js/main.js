@@ -189,6 +189,53 @@ function initializeTypingEffect() {
     setTimeout(type, 1000);
 }
 
+// Initialize project carousels
+function initializeProjectCarousels() {
+    // Find all project carousels on the page
+    const projectCarousels = document.querySelectorAll('.project-carousel .carousel-slide');
+    
+    projectCarousels.forEach(carousel => {
+        const images = carousel.querySelectorAll('.carousel-image');
+        if (images.length < 2) return; // Skip if there's only one or no images
+        
+        let currentIndex = 0;
+        let slideInterval;
+        
+        // Function to show a specific slide
+        function showSlide(index) {
+            // Hide all images
+            images.forEach(img => {
+                img.classList.remove('active');
+            });
+            
+            // Show current image
+            images[index].classList.add('active');
+        }
+        
+        // Auto-slide function
+        function autoSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+        
+        // Start auto-sliding
+        slideInterval = setInterval(autoSlide, 3000); // Change slide every 3 seconds
+        
+        // Pause auto-slide on hover
+        carousel.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+        
+        // Resume auto-slide on mouse leave
+        carousel.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(autoSlide, 3000);
+        });
+        
+        // Log that we've initialized this carousel
+        console.log('Initialized project carousel with ID:', carousel.id);
+    });
+}
+
 // Initialize modal functionality
 function initializeModals() {
     const modal = document.getElementById('project-demo-modal');
