@@ -402,16 +402,25 @@ function setupProjectCards() {
                                 partnershipSection.style.display = 'none';
                             }
                             
-                            // If this project has carousel images, initialize that too
+                            // If this project has carousel images, always initialize carousel and show it first
                             if (project.carousel_images && project.carousel_images.length > 0) {
-                                // Show the carousel content
+                                // Show the carousel content at the top
                                 const carouselContent = document.getElementById('carousel-demo');
                                 if (carouselContent) {
+                                    // Make sure it's the first element in the modal body
+                                    const modalBody = modal.querySelector('.modal-body');
+                                    if (modalBody) {
+                                        modalBody.prepend(carouselContent);
+                                    }
+                                    
                                     carouselContent.classList.add('active');
                                     
                                     // For the first project, auto-slide without buttons
                                     const isFirstProject = (projectId === 'e-commerce-fitting-room');
                                     setupCarousel(project.carousel_images, isFirstProject);
+                                    
+                                    // Add a console log for debugging
+                                    console.log('Carousel initialized with images:', project.carousel_images);
                                 }
                             }
                         }
@@ -447,12 +456,26 @@ function setupProjectCards() {
         carouselSlide.innerHTML = '';
         carouselIndicators.innerHTML = '';
         
-        // Add images to carousel
+        // Add images to carousel - ensure they appear
         images.forEach((image, index) => {
             const img = document.createElement('img');
             img.src = `/static/images/ai-gallery/${image}`;
             img.alt = `Project image ${index + 1}`;
             img.className = index === 0 ? 'carousel-image active' : 'carousel-image';
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.onerror = () => {
+                console.error(`Failed to load image: ${image}`);
+                // Try to show a fallback or provide visual feedback
+                img.style.background = '#333';
+                img.style.display = 'flex';
+                img.style.alignItems = 'center';
+                img.style.justifyContent = 'center';
+                img.style.minHeight = '300px';
+            };
+            img.onload = () => {
+                console.log(`Successfully loaded image: ${image}`);
+            };
             carouselSlide.appendChild(img);
             
             // Add indicator
