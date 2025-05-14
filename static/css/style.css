@@ -724,6 +724,9 @@ section {
     margin-bottom: var(--space-lg);
     max-width: 900px;
     margin: 0 auto;
+    background-color: var(--color-dark-gray);
+    padding: 0;
+    border: 2px solid var(--color-mid-gray);
 }
 
 .carousel-slide {
@@ -869,10 +872,19 @@ section {
 
 .demo-content {
     display: none;
+    width: 100%;
+    margin-bottom: 2rem;
 }
 
 .demo-content.active {
     display: block;
+}
+
+#carousel-demo {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .project-visual {
