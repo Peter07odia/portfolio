@@ -355,6 +355,38 @@ section {
     gap: var(--space-md);
 }
 
+.social-links {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(112, 0, 255, 0.1);
+    border: 1px solid rgba(112, 0, 255, 0.3);
+    border-radius: var(--border-radius-md);
+    color: var(--color-white);
+    transition: all var(--transition-medium);
+    text-decoration: none;
+}
+
+.social-link:hover {
+    background-color: var(--color-purple);
+    border-color: var(--color-purple);
+    transform: translateY(-2px);
+    color: var(--color-white);
+}
+
+.social-link i {
+    width: 20px;
+    height: 20px;
+}
+
 .hero-visual {
     position: absolute;
     top: 50%;
