@@ -1025,6 +1025,23 @@ section {
     mix-blend-mode: overlay;
 }
 
+.mobile-app-image {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.mobile-app-image::before {
+    content: '📱';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.3;
+    animation: pulse 3s infinite alternate;
+}
+
 .agent-image {
     background-color: #221133;
     position: relative;

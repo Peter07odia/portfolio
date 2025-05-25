@@ -13,6 +13,25 @@ def get_projects():
     """
     projects = [
         {
+            "id": "homify-mvp",
+            "title": "🏠 Homify MVP - AI-Powered Room Visualization App",
+            "category": "AI Mobile Application",
+            "description": "A React Native mobile application that transforms room photos using AI-powered two-stage processing. Users can take photos of their rooms and generate both empty room visualizations and styled room transformations with interactive before/after comparison.",
+            "tech_stack": ["React Native", "TypeScript", "Expo", "Supabase", "OpenAI DALL-E 2", "n8n", "expo-camera"],
+            "highlights": [
+                "Two-stage AI processing: empty room generation + styled transformations",
+                "8 design styles (Minimal, Modern, Bohemian, Scandinavian, etc.)",
+                "Mobile-first experience with native camera integration",
+                "Interactive before/after comparison slider with haptic feedback",
+                "Real-time workflow automation via n8n",
+                "Full-stack architecture: Mobile App → Supabase → n8n → OpenAI DALL-E 2",
+                "Target market similar to Home AI (5M+ downloads, 4.6 rating)"
+            ],
+            "interactive": False,
+            "demo_type": "mobile",
+            "image_class": "mobile-app-image"
+        },
+        {
             "id": "e-commerce-fitting-room",
             "title": "E-Commerce Virtual Fitting Room",
             "category": "AI Product Design",
