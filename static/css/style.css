@@ -332,6 +332,9 @@ section {
 .hero-content {
     max-width: 600px;
     margin-bottom: var(--space-3xl);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .animated-title {
@@ -390,8 +393,10 @@ section {
 /* Profile Picture Styles */
 .profile-picture-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     margin-bottom: var(--space-lg);
+    width: 100%;
 }
 
 .profile-picture {
@@ -404,6 +409,7 @@ section {
     animation: profileRoll 6s infinite linear;
     box-shadow: 0 8px 32px rgba(112, 0, 255, 0.3);
     transition: all var(--transition-medium);
+    margin-left: 0;
 }
 
 .profile-picture:hover {
