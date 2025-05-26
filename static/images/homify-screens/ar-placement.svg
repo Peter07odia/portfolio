@@ -1,0 +1,49 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="600" fill="#f9f7f4"/>
+  
+  <!-- Skip and back buttons -->
+  <text x="30" y="40" font-family="Arial, sans-serif" font-size="14" fill="#8b7355">‹</text>
+  <text x="270" y="40" font-family="Arial, sans-serif" font-size="14" fill="#8b7355">Skip</text>
+  
+  <!-- Phone mockup showing AR -->
+  <rect x="50" y="80" width="200" height="350" rx="25" fill="#2a2a2a"/>
+  <rect x="60" y="90" width="180" height="330" rx="20" fill="#f0f0f0"/>
+  
+  <!-- Room in phone -->
+  <rect x="70" y="100" width="160" height="200" fill="#f5f1eb"/>
+  
+  <!-- Sofa with AR overlay -->
+  <rect x="90" y="220" width="120" height="40" rx="8" fill="#d4c7b0"/>
+  <rect x="95" y="215" width="110" height="8" rx="4" fill="#c7b299"/>
+  
+  <!-- AR measurement lines -->
+  <line x1="90" y1="180" x2="210" y2="180" stroke="#4a90e2" stroke-width="2"/>
+  <text x="150" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#4a90e2">3.4 m</text>
+  
+  <line x1="75" y1="200" x2="75" y2="260" stroke="#4a90e2" stroke-width="2"/>
+  <text x="65" y="230" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#4a90e2">1.6m</text>
+  
+  <!-- AR furniture grid -->
+  <g stroke="#4a90e2" stroke-width="1" opacity="0.5">
+    <rect x="85" y="320" width="20" height="15" fill="none"/>
+    <rect x="110" y="320" width="20" height="15" fill="none"/>
+    <rect x="135" y="320" width="20" height="15" fill="none"/>
+    <rect x="160" y="320" width="20" height="15" fill="none"/>
+  </g>
+  
+  <!-- Status text -->
+  <text x="150" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#8b7355">Analyzing...</text>
+  
+  <!-- Title -->
+  <text x="150" y="470" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#8b7355">AR Furniture Placement</text>
+  
+  <!-- Description -->
+  <text x="150" y="510" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#a0958a">Place virtual furniture in your real space to</text>
+  <text x="150" y="525" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#a0958a">visualize size, style, and fit before making any</text>
+  <text x="150" y="540" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#a0958a">purchase decisions.</text>
+  
+  <!-- Get Started button -->
+  <rect x="75" y="570" width="150" height="40" rx="20" fill="#8b7355"/>
+  <text x="150" y="595" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Get Started</text>
+</svg>

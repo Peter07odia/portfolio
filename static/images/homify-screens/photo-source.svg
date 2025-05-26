@@ -1,0 +1,22 @@
+<svg width="300" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="600" fill="#f9f7f4"/>
+  
+  <!-- Header -->
+  <text x="150" y="80" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#8b7355">Choose Photo Source</text>
+  <text x="150" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#a0958a">Take a photo or upload an image to redesign your space with AI</text>
+  
+  <!-- Camera button -->
+  <rect x="40" y="200" width="220" height="80" rx="15" fill="#8b7355"/>
+  <circle cx="80" cy="240" r="15" fill="white"/>
+  <rect x="73" y="233" width="14" height="14" fill="#8b7355" rx="2"/>
+  <text x="120" y="235" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white">Take Photo</text>
+  <text x="120" y="255" font-family="Arial, sans-serif" font-size="12" fill="rgba(255,255,255,0.8)">Use your camera to capture a room</text>
+  
+  <!-- Gallery button -->
+  <rect x="40" y="320" width="220" height="80" rx="15" fill="white" stroke="#e0d5cc" stroke-width="2"/>
+  <rect x="70" y="350" width="20" height="15" fill="#d4c7b0" rx="2"/>
+  <rect x="75" y="345" width="10" height="10" fill="#8b7355" rx="1"/>
+  <text x="120" y="355" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#8b7355">Choose from Gallery</text>
+  <text x="120" y="375" font-family="Arial, sans-serif" font-size="12" fill="#a0958a">Select an existing photo from your library</text>
+</svg>
