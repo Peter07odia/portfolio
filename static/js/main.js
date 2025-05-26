@@ -9,6 +9,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize project carousels
     initializeProjectCarousels();
     
+    // Initialize Homify mobile carousel
+    setupHomifyCarousel();
+    
     // Navigation menu toggle for mobile
     const menuToggle = document.getElementById('menu-toggle');
     const navLinks = document.getElementById('nav-links');

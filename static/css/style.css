@@ -1007,6 +1007,97 @@ section {
     min-height: 400px; /* Ensure consistent height */
 }
 
+/* Mobile Phone Carousel Styling */
+.mobile-phone-carousel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.phone-frame {
+    width: 280px;
+    height: 580px;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+    border-radius: 35px;
+    padding: 20px;
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.phone-frame::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 5px;
+    background: #333;
+    border-radius: 3px;
+}
+
+.phone-frame::after {
+    content: '';
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 4px;
+    background: #333;
+    border-radius: 2px;
+}
+
+.phone-screen {
+    width: 100%;
+    height: 100%;
+    background: #000;
+    border-radius: 25px;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone-screen-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.phone-screen-slide.active {
+    opacity: 1;
+}
+
+.phone-image {
+    width: 100%;
+    height: calc(100% - 30px);
+    object-fit: cover;
+    object-position: center;
+}
+
+.screen-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    color: #fff;
+    font-size: 11px;
+    text-align: center;
+    padding: 8px 5px 5px;
+    font-weight: 500;
+}
+
 /* Project card carousel styling */
 .project-carousel {
     width: 100%;

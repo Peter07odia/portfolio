@@ -304,6 +304,45 @@ function setupContentGeneratorDemo() {
 }
 
 /**
+ * Setup mobile phone carousel for Homify project
+ */
+function setupHomifyCarousel() {
+    const carousel = document.getElementById('homify-carousel');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.phone-screen-slide');
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+    const slideInterval = 3000; // 3 seconds per slide
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Start auto-scrolling
+    const autoSlide = setInterval(nextSlide, slideInterval);
+
+    // Pause on hover and resume on mouse leave
+    carousel.addEventListener('mouseenter', () => {
+        clearInterval(autoSlide);
+    });
+
+    carousel.addEventListener('mouseleave', () => {
+        setInterval(nextSlide, slideInterval);
+    });
+
+    console.log('Homify mobile carousel initialized with', slides.length, 'slides');
+}
+
+/**
  * Setup project card interactions
  */
 function setupProjectCards() {
