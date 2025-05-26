@@ -311,10 +311,12 @@ function setupHomifyCarousel() {
     if (!carousel) return;
 
     const slides = carousel.querySelectorAll('.phone-screen-slide');
+    const prevBtn = document.getElementById('homify-prev');
+    const nextBtn = document.getElementById('homify-next');
+    
     if (slides.length === 0) return;
 
     let currentSlide = 0;
-    const slideInterval = 3000; // 3 seconds per slide
 
     function showSlide(index) {
         slides.forEach((slide, i) => {
@@ -327,17 +329,19 @@ function setupHomifyCarousel() {
         showSlide(currentSlide);
     }
 
-    // Start auto-scrolling
-    const autoSlide = setInterval(nextSlide, slideInterval);
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
 
-    // Pause on hover and resume on mouse leave
-    carousel.addEventListener('mouseenter', () => {
-        clearInterval(autoSlide);
-    });
-
-    carousel.addEventListener('mouseleave', () => {
-        setInterval(nextSlide, slideInterval);
-    });
+    // Add event listeners for navigation buttons
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
 
     console.log('Homify mobile carousel initialized with', slides.length, 'slides');
 }

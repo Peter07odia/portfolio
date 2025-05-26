@@ -1085,17 +1085,41 @@ section {
     object-position: center;
 }
 
-.screen-label {
+/* Navigation Arrows for Mobile Carousel */
+.carousel-arrow {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-    color: #fff;
-    font-size: 11px;
-    text-align: center;
-    padding: 8px 5px 5px;
-    font-weight: 500;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-arrow:hover {
+    background: rgba(0, 0, 0, 0.8);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow-left {
+    left: -60px;
+}
+
+.carousel-arrow-right {
+    right: -60px;
+}
+
+.carousel-arrow i {
+    color: white;
+    width: 20px;
+    height: 20px;
 }
 
 /* Project card carousel styling */
