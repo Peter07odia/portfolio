@@ -695,9 +695,9 @@ section {
     grid-template-columns: 1.5fr 1fr;
     gap: var(--space-xl);
     padding: var(--space-xl);
-    overflow: hidden;
+    overflow: visible;
     position: relative;
-    max-height: 600px; /* Limit card height */
+    min-height: 500px; /* Ensure minimum height instead of limiting max */
 }
 
 .project-card:nth-child(even) {
@@ -752,6 +752,20 @@ section {
 
 .project-highlights {
     margin-bottom: var(--space-lg);
+    max-height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.project-highlights::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(transparent, var(--color-dark));
+    pointer-events: none;
 }
 
 .project-highlights h4 {
@@ -785,6 +799,27 @@ section {
 .project-actions {
     display: flex;
     gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.details-btn {
+    position: relative;
+    animation: subtle-pulse 2s infinite;
+}
+
+.details-btn::after {
+    content: '↓ More info';
+    position: absolute;
+    top: -25px;
+    right: 0;
+    font-size: 10px;
+    color: var(--color-blue);
+    opacity: 0.7;
+}
+
+@keyframes subtle-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
 }
 
 /* Carousel Styles */
