@@ -63,31 +63,34 @@ def get_projects():
             "partnership": "We're open to partnerships with fashion retailers, e-commerce platforms, and technology companies. Contact us to explore collaboration opportunities for implementing this technology in your business."
         },
         {
-          "id": "content-creating-agent-workflow",
-          "title": "Automated Content Agent Pipeline",
-          "category": "Workflow Automation",
-          "description": "An end-to-end n8n workflow that pulls ideas, auto-generates multimedia content with AI, routes assets to the right platform, and logs performance data for continuous optimization.",
-          "tech_stack": [
-            "n8n",
-            "OpenAI API (text & image endpoints)",
-            "Kling AI (video generation)",
-            "PiAPI (image to video stitching)",
-            "Google Sheets & Drive",
-            "JINA AI (Deep Research Agent)",
-            "Vercel Serverless Functions",
-            "Firebase Firestore (asset/metric store)"
-          ],
-          "highlights": [
-            "Central Idea Queue triggers AI copywriting & image prompts automatically",
-            "Conditional branches for TikTok, Instagram, X, LinkedIn formatting",
-            "Webhook-based Midjourney & PiAPI calls with retry logic and timeout guards",
-            "Filename & folder conventions for robust asset management in Drive",
-            "Real-time KPI logging (impressions, CTR) back to Firestore and Sheets",
-            "Slack/Discord alerts when a post or render fails, with auto-requeue option",
-            "Automated posting to LinkedIn, Instagram, TikTok, and X"
-          ],
-          "interactive": False,
-          "image_class": "workflow-image"
+            "id": "smart-gold-choices",
+            "title": "Smart Gold Choices - Comprehensive Digital Marketing Ecosystem",
+            "category": "Financial Services & Marketing Automation",
+            "description": "A full-stack financial services platform with integrated AI-powered content creation and lead generation automation, featuring responsive web design, serverless backend, and multi-platform social media automation for gold IRA investment services.",
+            "tech_stack": [
+                "HTML5/CSS3/JavaScript",
+                "Node.js/Vercel Functions",
+                "Firebase Firestore",
+                "n8n Automation",
+                "OpenAI GPT-4",
+                "Perplexity AI",
+                "Jina Deep Research",
+                "Telegram API",
+                "Slack Integration",
+                "Progressive Web App"
+            ],
+            "highlights": [
+                "Automated content pipeline with real-time gold market analysis and GPT-4 content generation",
+                "Multi-platform social media publishing (LinkedIn, Facebook, X/Twitter) with human approval workflows",
+                "AI blog generation system with Telegram triggers and WordPress publishing",
+                "Advanced lead capture with Firebase backend and real-time analytics",
+                "Progressive Web App with offline capabilities and service worker implementation",
+                "Multi-modal AI processing: voice transcription, image analysis, and intelligent content routing",
+                "Human-in-the-loop approval system via Slack with content regeneration options"
+            ],
+            "interactive": False,
+            "image_class": "fintech-image",
+            "website_url": "https://www.smartgoldchoices.com"
         },
         {
             "id": "nvidia-vss-safety-analytics",
@@ -115,21 +118,7 @@ def get_projects():
             "demo_type": "generator",
             "image_class": "api-image"
         },
-        {
-            "id": "lead-generation-pipeline",
-            "title": "AI-Powered Lead Generation System",
-            "category": "Data Automation",
-            "description": "An automated pipeline for lead scraping, validation, and enrichment that leverages AI to identify and qualify potential business prospects across various platforms.",
-            "tech_stack": ["Python", "SQL", "AWS", "Google Sheets API", "Make.com"],
-            "highlights": [
-                "Intelligent lead qualification based on multiple criteria",
-                "Automated data cleaning and normalization",
-                "Email verification and contact information enrichment",
-                "CRM integration and campaign tagging"
-            ],
-            "interactive": False,
-            "image_class": "data-image"
-        }
+
     ]
     
     return projects

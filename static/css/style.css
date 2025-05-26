@@ -1221,6 +1221,40 @@ section {
     animation: pulse 4s infinite alternate;
 }
 
+.fintech-image {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.fintech-image::before {
+    content: '💰';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4rem;
+    opacity: 0.4;
+    animation: pulse 3s infinite alternate;
+}
+
+.fintech-image::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.3) 0%, transparent 70%);
+    top: 20%;
+    right: 20%;
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+}
+
 .llm-image {
     background-color: #112233;
     position: relative;
