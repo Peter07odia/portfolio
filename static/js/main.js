@@ -242,10 +242,30 @@ function initializeProjectCarousels() {
 // Initialize modal functionality
 function initializeModals() {
     const modal = document.getElementById('project-demo-modal');
-    if (!modal) return;
+    const detailsModal = document.getElementById('project-details-modal');
     
-    const closeModalBtn = modal.querySelector('.close-modal');
-    const openDemoBtns = document.querySelectorAll('.open-demo');
+    if (!modal && !detailsModal) return;
+    
+    // Handle demo modal
+    if (modal) {
+        const closeModalBtn = modal.querySelector('.close-modal');
+        const openDemoBtns = document.querySelectorAll('.open-demo');
+        
+        // Close modal functionality
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
     
     // Open modal with specific demo content
     openDemoBtns.forEach(btn => {

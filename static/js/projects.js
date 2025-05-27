@@ -375,12 +375,191 @@ function setupProjectCards() {
                 // Get project ID
                 const projectId = card.getAttribute('data-project-id');
                 
+                // Open details modal instead of demo modal
+                const detailsModal = document.getElementById('project-details-modal');
+                if (!detailsModal) return;
+                
                 // Find this project in the data
                 fetch('/api/projects')
                     .then(response => response.json())
                     .then(projects => {
                         const project = projects.find(p => p.id === projectId);
                         if (!project) return;
+                        
+                        // Set modal title
+                        const detailsTitle = document.getElementById('details-title');
+                        if (detailsTitle) {
+                            detailsTitle.textContent = project.title;
+                        }
+                        
+                        // Create detailed content for Smart Gold Choices
+                        if (projectId === 'smart-gold-choices') {
+                            const detailsContent = document.getElementById('project-details-content');
+                            detailsContent.innerHTML = `
+                                <div class="project-details-header">
+                                    <h4>${project.title}</h4>
+                                    <p>${project.description}</p>
+                                    <div class="project-website">
+                                        <a href="https://www.smartgoldchoices.com" target="_blank" class="primary-btn">
+                                            <i data-feather="external-link"></i>
+                                            Visit Live Website
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Technology Architecture</h5>
+                                    <div class="tech-stack-grid">
+                                        ${project.tech_stack.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Key Features & Capabilities</h5>
+                                    <ul>
+                                        ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>n8n Automation Workflows</h5>
+                                    <div class="workflow-showcase">
+                                        <div class="workflow-item">
+                                            <h6>Social Media Automation Pipeline</h6>
+                                            <div class="workflow-description">
+                                                <p>Automated content creation and multi-platform publishing with human approval workflows.</p>
+                                                <ul>
+                                                    <li>Real-time gold market analysis with Jina Deep Research</li>
+                                                    <li>GPT-4 powered content generation for LinkedIn, Facebook, X/Twitter</li>
+                                                    <li>Automated image generation with brand consistency</li>
+                                                    <li>Slack-based approval system with regeneration options</li>
+                                                    <li>Cross-platform publishing with engagement tracking</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="workflow-item">
+                                            <h6>Blog Content Automation System</h6>
+                                            <div class="workflow-description">
+                                                <p>Telegram-triggered multi-modal content processing with automated WordPress publishing.</p>
+                                                <ul>
+                                                    <li>Voice transcription and image analysis via OpenAI APIs</li>
+                                                    <li>Perplexity AI integration for market research and SEO optimization</li>
+                                                    <li>Automated WordPress publishing with metadata and featured images</li>
+                                                    <li>Multi-modal input processing (voice, image, text)</li>
+                                                    <li>Intelligent content routing and formatting</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Technical Implementation</h5>
+                                    <div class="implementation-grid">
+                                        <div class="implementation-item">
+                                            <h6>Frontend & Web Platform</h6>
+                                            <ul>
+                                                <li>Responsive financial services website with mobile-first design</li>
+                                                <li>Progressive Web App with service worker caching</li>
+                                                <li>Multi-page architecture with advanced form validation</li>
+                                                <li>Exit intent popups and lead capture optimization</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="implementation-item">
+                                            <h6>Backend Infrastructure</h6>
+                                            <ul>
+                                                <li>Serverless Vercel Functions for API endpoints</li>
+                                                <li>Firebase Firestore for real-time lead data storage</li>
+                                                <li>Environment variable management for secure credentials</li>
+                                                <li>CORS configuration and API key authentication</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="implementation-item">
+                                            <h6>AI Integration Stack</h6>
+                                            <ul>
+                                                <li>OpenAI GPT-4o for content generation and image analysis</li>
+                                                <li>Perplexity AI for real-time market research</li>
+                                                <li>Jina Deep Research for comprehensive market analysis</li>
+                                                <li>Multi-modal processing with intelligent content routing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Business Impact & Metrics</h5>
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-number">12hr</span>
+                                            <span class="metric-label">Automated Content Cycles</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">4</span>
+                                            <span class="metric-label">Publishing Platforms</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">Multi-Modal</span>
+                                            <span class="metric-label">AI Processing</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">Real-Time</span>
+                                            <span class="metric-label">Lead Analytics</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            // Default details for other projects
+                            const detailsContent = document.getElementById('project-details-content');
+                            detailsContent.innerHTML = `
+                                <div class="project-details-header">
+                                    <h4>${project.title}</h4>
+                                    <p>${project.description}</p>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Technology Stack</h5>
+                                    <div class="tech-stack-grid">
+                                        ${project.tech_stack.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Key Features</h5>
+                                    <ul>
+                                        ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                
+                                ${project.benefits ? `
+                                <div class="project-details-section">
+                                    <h5>Business Benefits</h5>
+                                    <ul>
+                                        ${project.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                ` : ''}
+                                
+                                ${project.partnership ? `
+                                <div class="project-details-section">
+                                    <h5>Partnership Opportunities</h5>
+                                    <p>${project.partnership}</p>
+                                </div>
+                                ` : ''}
+                            `;
+                        }
+                        
+                        // Show the details modal
+                        detailsModal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                        
+                        // Re-initialize feather icons for the new content
+                        if (typeof feather !== 'undefined') {
+                            feather.replace();
+                        }
                         
                         // Set modal title
                         if (demoTitle) {

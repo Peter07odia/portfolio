@@ -1255,6 +1255,124 @@ section {
     50% { transform: translateY(-20px); }
 }
 
+/* Project Details Modal Styling */
+.project-website {
+    margin: var(--space-md) 0;
+    text-align: center;
+}
+
+.project-website .primary-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-lg);
+    background: linear-gradient(135deg, var(--color-purple), var(--color-blue));
+    color: white;
+    text-decoration: none;
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.project-website .primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(112, 0, 255, 0.3);
+}
+
+.tech-stack-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-sm);
+}
+
+.tech-badge {
+    background: rgba(112, 0, 255, 0.2);
+    border: 1px solid var(--color-purple);
+    padding: var(--space-xxs) var(--space-sm);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-sm);
+    color: var(--color-blue);
+    font-weight: 500;
+}
+
+.workflow-showcase {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+.workflow-item {
+    background: rgba(30, 30, 50, 0.3);
+    border: 1px solid rgba(112, 0, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-lg);
+}
+
+.workflow-item h6 {
+    color: var(--color-blue);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+}
+
+.workflow-description p {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: var(--space-md);
+    font-style: italic;
+}
+
+.implementation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+.implementation-item {
+    background: rgba(30, 30, 50, 0.3);
+    border: 1px solid rgba(0, 245, 255, 0.2);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-md);
+}
+
+.implementation-item h6 {
+    color: var(--color-blue);
+    margin-bottom: var(--space-sm);
+    font-size: var(--font-size-md);
+    font-weight: 600;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+}
+
+.metric-item {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(112, 0, 255, 0.1), rgba(0, 245, 255, 0.1));
+    border: 1px solid rgba(112, 0, 255, 0.3);
+    border-radius: var(--border-radius-md);
+    padding: var(--space-md);
+}
+
+.metric-number {
+    display: block;
+    font-size: var(--font-size-xl);
+    font-weight: bold;
+    color: var(--color-blue);
+    margin-bottom: var(--space-xs);
+}
+
+.metric-label {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.8);
+}
+
 .llm-image {
     background-color: #112233;
     position: relative;
