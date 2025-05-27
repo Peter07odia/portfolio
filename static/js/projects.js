@@ -371,7 +371,10 @@ function setupProjectCards() {
         // Handle "View Details" button click to show project details
         const detailsBtn = card.querySelector('.details-btn');
         if (detailsBtn) {
-            detailsBtn.addEventListener('click', function() {
+            detailsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
                 // Get project ID
                 const projectId = card.getAttribute('data-project-id');
                 

@@ -266,18 +266,68 @@ function initializeModals() {
                 document.body.style.overflow = '';
             }
         });
+        
+        // Open modal with specific demo content
+        openDemoBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const projectId = this.getAttribute('data-project-id');
+                const demoType = this.getAttribute('data-demo-type');
+                
+                // Set modal title based on project
+                const projectTitleEl = document.querySelector(`.project-card[data-project-id="${projectId}"] .project-title`);
+                const demoTitle = document.getElementById('demo-title');
+                
+                if (projectTitleEl && demoTitle) {
+                    demoTitle.textContent = projectTitleEl.textContent;
+                }
+                
+                // Show modal
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+    }
     
-    // Open modal with specific demo content
-    openDemoBtns.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const projectId = this.getAttribute('data-project-id');
-            const demoType = this.getAttribute('data-demo-type');
-            
-            // Set modal title based on project
-            const projectTitleEl = document.querySelector(`.project-card[data-project-id="${projectId}"] .project-title`);
-            const demoTitle = document.getElementById('demo-title');
-            
-            if (projectTitleEl && demoTitle) {
+    // Handle details modal
+    if (detailsModal) {
+        const closeDetailsBtn = detailsModal.querySelector('.close-modal');
+        
+        // Close details modal functionality
+        if (closeDetailsBtn) {
+            closeDetailsBtn.addEventListener('click', function() {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Close details modal when clicking outside
+        detailsModal.addEventListener('click', function(e) {
+            if (e.target === detailsModal) {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Close modals on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (modal && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            if (detailsModal && detailsModal.classList.contains('active')) {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+    });
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    initializeModals();
+});
                 demoTitle.textContent = `${projectTitleEl.textContent} Demo`;
             }
             
