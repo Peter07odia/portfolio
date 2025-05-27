@@ -89,8 +89,14 @@ def get_projects():
                 "Human-in-the-loop approval system via Slack with content regeneration options"
             ],
             "interactive": False,
+            "demo_type": "carousel",
             "image_class": "fintech-image",
-            "website_url": "https://www.smartgoldchoices.com"
+            "website_url": "https://www.smartgoldchoices.com",
+            "carousel_images": [
+                "/static/images/smart-gold-screenshots/website-homepage.png",
+                "/static/images/smart-gold-screenshots/n8n-blog-workflow.png", 
+                "/static/images/smart-gold-screenshots/workflow-execution.png"
+            ]
         },
         {
             "id": "nvidia-vss-safety-analytics",

@@ -565,10 +565,6 @@ function setupProjectCards() {
                         }
                         
                         // Modal is already showing with content populated above
-                        
-                        // Show modal
-                        modal.classList.add('active');
-                        document.body.style.overflow = 'hidden'; // Prevent scrolling
                     });
             });
         }
