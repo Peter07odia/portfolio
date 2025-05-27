@@ -563,8 +563,9 @@ function setupProjectCards() {
                         if (typeof feather !== 'undefined') {
                             feather.replace();
                         }
-                        
-                        // Modal is already showing with content populated above
+                    })
+                    .catch(error => {
+                        console.error('Error loading project details:', error);
                     });
             });
         }
