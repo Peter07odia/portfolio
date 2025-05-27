@@ -297,9 +297,39 @@ function initializeModals() {
             document.body.style.overflow = 'hidden'; // Prevent scrolling
         });
     });
+    }
     
-    // Close modal
-    if (closeModalBtn) {
+    // Handle details modal
+    if (detailsModal) {
+        const detailsCloseBtn = detailsModal.querySelector('.close-modal');
+        
+        // Close details modal functionality
+        if (detailsCloseBtn) {
+            detailsCloseBtn.addEventListener('click', function() {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+        
+        // Close details modal when clicking outside
+        detailsModal.addEventListener('click', function(e) {
+            if (e.target === detailsModal) {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close details modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && detailsModal.classList.contains('active')) {
+                detailsModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Close demo modal
+    if (modal && closeModalBtn) {
         closeModalBtn.addEventListener('click', function() {
             modal.classList.remove('active');
             document.body.style.overflow = ''; // Restore scrolling
