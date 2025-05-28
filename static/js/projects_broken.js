@@ -288,17 +288,62 @@ function setupContentGeneratorDemo() {
                 </div>
                 <div class="email-body">
                     <p>${greetings[style] || `Hello,`}</p>
-                    <p>${bodies[style] || `Here's some information about ${topic}.`}</p>
-                    <p>Best regards,<br>Your AI Content Generator</p>
+                    <p>${bodies[style] || `This is an email about ${topic}.`}</p>
+                    <p>I've prepared a detailed overview that I believe will be valuable for your strategic planning. Would you be available for a brief discussion next week to explore how these insights might apply to your specific situation?</p>
+                    <p>Looking forward to your response.</p>
+                    <p>Best regards,<br>AI Content Studio</p>
                 </div>
             </div>
         `;
     }
     
-    // Capitalize first letter of string
+    // Helper function to capitalize first letter of each word
     function capitalize(str) {
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        return str.replace(/\b\w/g, char => char.toUpperCase());
     }
+}
+
+/**
+ * Setup mobile phone carousel for Homify project
+ */
+function setupHomifyCarousel() {
+    const carousel = document.getElementById('homify-carousel');
+    if (!carousel) return;
+
+    const slides = carousel.querySelectorAll('.phone-screen-slide');
+    const prevBtn = document.getElementById('homify-prev');
+    const nextBtn = document.getElementById('homify-next');
+    
+    if (slides.length === 0) return;
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // Add event listeners for navigation buttons
+    if (nextBtn) {
+        nextBtn.addEventListener('click', nextSlide);
+    }
+    
+    if (prevBtn) {
+        prevBtn.addEventListener('click', prevSlide);
+    }
+
+    console.log('Homify mobile carousel initialized with', slides.length, 'slides');
 }
 
 /**
@@ -306,6 +351,9 @@ function setupContentGeneratorDemo() {
  */
 function setupProjectCards() {
     const projectCards = document.querySelectorAll('.project-card');
+    const modal = document.getElementById('project-demo-modal');
+    const demoTitle = document.getElementById('demo-title');
+    let carouselInterval;
     
     projectCards.forEach(card => {
         // Add hover effects
@@ -330,7 +378,7 @@ function setupProjectCards() {
                 // Get project ID
                 const projectId = card.getAttribute('data-project-id');
                 
-                // Open details modal
+                // Open details modal instead of demo modal
                 const detailsModal = document.getElementById('project-details-modal');
                 if (!detailsModal) return;
                 
@@ -375,6 +423,96 @@ function setupProjectCards() {
                                         ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
                                     </ul>
                                 </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>n8n Automation Workflows</h5>
+                                    <div class="workflow-showcase">
+                                        <div class="workflow-item">
+                                            <h6>Social Media Automation Pipeline</h6>
+                                            <div class="workflow-description">
+                                                <p>Automated content creation and multi-platform publishing with human approval workflows.</p>
+                                                <ul>
+                                                    <li>Real-time gold market analysis with Jina Deep Research</li>
+                                                    <li>GPT-4 powered content generation for LinkedIn, Facebook, X/Twitter</li>
+                                                    <li>Automated image generation with brand consistency</li>
+                                                    <li>Slack-based approval system with regeneration options</li>
+                                                    <li>Cross-platform publishing with engagement tracking</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="workflow-item">
+                                            <h6>Blog Content Automation System</h6>
+                                            <div class="workflow-description">
+                                                <p>Telegram-triggered multi-modal content processing with automated WordPress publishing.</p>
+                                                <ul>
+                                                    <li>Voice transcription and image analysis via OpenAI APIs</li>
+                                                    <li>Perplexity AI integration for market research and SEO optimization</li>
+                                                    <li>Automated WordPress publishing with metadata and featured images</li>
+                                                    <li>Multi-modal input processing (voice, image, text)</li>
+                                                    <li>Intelligent content routing and formatting</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Technical Implementation</h5>
+                                    <div class="implementation-grid">
+                                        <div class="implementation-item">
+                                            <h6>Frontend & Web Platform</h6>
+                                            <ul>
+                                                <li>Responsive financial services website with mobile-first design</li>
+                                                <li>Progressive Web App with service worker caching</li>
+                                                <li>Multi-page architecture with advanced form validation</li>
+                                                <li>Exit intent popups and lead capture optimization</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="implementation-item">
+                                            <h6>Backend Infrastructure</h6>
+                                            <ul>
+                                                <li>Serverless Vercel Functions for API endpoints</li>
+                                                <li>Firebase Firestore for real-time lead data storage</li>
+                                                <li>Environment variable management for secure credentials</li>
+                                                <li>CORS configuration and API key authentication</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="implementation-item">
+                                            <h6>AI Integration Stack</h6>
+                                            <ul>
+                                                <li>OpenAI GPT-4o for content generation and image analysis</li>
+                                                <li>Perplexity AI for real-time market research</li>
+                                                <li>Jina Deep Research for comprehensive market analysis</li>
+                                                <li>Multi-modal processing with intelligent content routing</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="project-details-section">
+                                    <h5>Business Impact & Metrics</h5>
+                                    <div class="metrics-grid">
+                                        <div class="metric-item">
+                                            <span class="metric-number">12hr</span>
+                                            <span class="metric-label">Automated Content Cycles</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">4</span>
+                                            <span class="metric-label">Publishing Platforms</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">Multi-Modal</span>
+                                            <span class="metric-label">AI Processing</span>
+                                        </div>
+                                        <div class="metric-item">
+                                            <span class="metric-number">Real-Time</span>
+                                            <span class="metric-label">Lead Analytics</span>
+                                        </div>
+                                    </div>
+                                </div>
                             `;
                         } else {
                             // Default details for other projects
@@ -398,6 +536,22 @@ function setupProjectCards() {
                                         ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
                                     </ul>
                                 </div>
+                                
+                                ${project.benefits ? `
+                                <div class="project-details-section">
+                                    <h5>Business Benefits</h5>
+                                    <ul>
+                                        ${project.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                                    </ul>
+                                </div>
+                                ` : ''}
+                                
+                                ${project.partnership ? `
+                                <div class="project-details-section">
+                                    <h5>Partnership Opportunities</h5>
+                                    <p>${project.partnership}</p>
+                                </div>
+                                ` : ''}
                             `;
                         }
                         
@@ -416,6 +570,144 @@ function setupProjectCards() {
             });
         }
     });
+    
+    // Setup carousel functionality
+    function setupCarousel(images, autoSlideOnly = false) {
+        const carouselSlide = document.getElementById('carousel-slide');
+        const carouselIndicators = document.getElementById('carousel-indicators');
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        let currentIndex = 0;
+        
+        // Hide navigation buttons for auto-slide only carousels
+        if (autoSlideOnly && prevBtn && nextBtn) {
+            prevBtn.style.display = 'none';
+            nextBtn.style.display = 'none';
+            carouselIndicators.style.display = 'none';
+        } else if (prevBtn && nextBtn) {
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+            carouselIndicators.style.display = 'flex';
+        }
+        
+        // Clear previous images and indicators
+        carouselSlide.innerHTML = '';
+        carouselIndicators.innerHTML = '';
+        
+        // Add images to carousel - ensure they appear
+        images.forEach((image, index) => {
+            const img = document.createElement('img');
+            // Check if the image path includes a full path (like /static/images/...)
+            img.src = image.startsWith('/') ? image : `/static/images/ai-gallery/${image}`;
+            img.alt = `Project image ${index + 1}`;
+            img.className = index === 0 ? 'carousel-image active' : 'carousel-image';
+            img.style.maxWidth = '100%';
+            img.style.height = 'auto';
+            img.style.objectFit = 'contain'; // Ensure image maintains aspect ratio
+            img.onerror = () => {
+                console.error(`Failed to load image: ${image}`);
+                // Try to show a fallback or provide visual feedback
+                img.style.background = '#333';
+                img.style.display = 'flex';
+                img.style.alignItems = 'center';
+                img.style.justifyContent = 'center';
+                img.style.minHeight = '300px';
+            };
+            img.onload = () => {
+                console.log(`Successfully loaded image: ${image}`);
+            };
+            carouselSlide.appendChild(img);
+            
+            // Add indicator
+            const indicator = document.createElement('span');
+            indicator.className = index === 0 ? 'carousel-indicator active' : 'carousel-indicator';
+            indicator.addEventListener('click', () => {
+                showSlide(index);
+            });
+            carouselIndicators.appendChild(indicator);
+        });
+        
+        // Function to show a specific slide
+        function showSlide(index) {
+            const carouselImages = carouselSlide.querySelectorAll('.carousel-image');
+            const indicators = carouselIndicators.querySelectorAll('.carousel-indicator');
+            
+            // Hide all images and deactivate indicators
+            carouselImages.forEach(img => img.classList.remove('active'));
+            indicators.forEach(ind => ind.classList.remove('active'));
+            
+            // Show current image and activate indicator
+            carouselImages[index].classList.add('active');
+            indicators[index].classList.add('active');
+            
+            currentIndex = index;
+        }
+        
+        // Next button click
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                showSlide(currentIndex);
+            });
+        }
+        
+        // Previous button click
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                showSlide(currentIndex);
+            });
+        }
+        
+        // Auto-slide function
+        function autoSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+        
+        // Clear any existing interval
+        if (carouselInterval) {
+            clearInterval(carouselInterval);
+        }
+        
+        // Determine the interval speed based on autoSlideOnly
+        const slideInterval = autoSlideOnly ? 3500 : 5000; // Faster for autoSlideOnly
+        
+        // Start auto-sliding
+        carouselInterval = setInterval(autoSlide, slideInterval);
+        
+        // Pause auto-slide on hover (only if not autoSlideOnly)
+        if (!autoSlideOnly) {
+            carouselSlide.addEventListener('mouseenter', () => {
+                clearInterval(carouselInterval);
+            });
+            
+            // Resume auto-slide on mouse leave
+            carouselSlide.addEventListener('mouseleave', () => {
+                carouselInterval = setInterval(autoSlide, slideInterval);
+            });
+        }
+        
+        // Stop auto-slide when modal is closed
+        const closeBtn = modal.querySelector('.close-modal');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                clearInterval(carouselInterval);
+            });
+        }
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                clearInterval(carouselInterval);
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                clearInterval(carouselInterval);
+            }
+        });
+    }
 }
 
 // Add staggered animation to project cards on scroll
