@@ -305,9 +305,13 @@ function setupContentGeneratorDemo() {
  * Setup project card interactions
  */
 function setupProjectCards() {
+    console.log('Setting up project cards...');
     const projectCards = document.querySelectorAll('.project-card');
+    console.log('Found project cards:', projectCards.length);
     
-    projectCards.forEach(card => {
+    projectCards.forEach((card, index) => {
+        console.log(`Setting up card ${index + 1}:`, card);
+        
         // Add hover effects
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
@@ -319,102 +323,6 @@ function setupProjectCards() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 8px 30px rgba(0, 0, 0, 0.15)';
         });
-        
-        // Handle "View Details" button click to show project details
-        const detailsBtn = card.querySelector('.details-btn');
-        if (detailsBtn) {
-            detailsBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                
-                // Get project ID
-                const projectId = card.getAttribute('data-project-id');
-                
-                // Open details modal
-                const detailsModal = document.getElementById('project-details-modal');
-                if (!detailsModal) return;
-                
-                // Find this project in the data
-                fetch('/api/projects')
-                    .then(response => response.json())
-                    .then(projects => {
-                        const project = projects.find(p => p.id === projectId);
-                        if (!project) return;
-                        
-                        // Set modal title
-                        const detailsTitle = document.getElementById('details-title');
-                        if (detailsTitle) {
-                            detailsTitle.textContent = project.title;
-                        }
-                        
-                        // Create detailed content for Smart Gold Choices
-                        if (projectId === 'smart-gold-choices') {
-                            const detailsContent = document.getElementById('project-details-content');
-                            detailsContent.innerHTML = `
-                                <div class="project-details-header">
-                                    <h4>${project.title}</h4>
-                                    <p>${project.description}</p>
-                                    <div class="project-website">
-                                        <a href="https://www.smartgoldchoices.com" target="_blank" class="primary-btn">
-                                            <i data-feather="external-link"></i>
-                                            Visit Live Website
-                                        </a>
-                                    </div>
-                                </div>
-                                
-                                <div class="project-details-section">
-                                    <h5>Technology Architecture</h5>
-                                    <div class="tech-stack-grid">
-                                        ${project.tech_stack.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
-                                    </div>
-                                </div>
-                                
-                                <div class="project-details-section">
-                                    <h5>Key Features & Capabilities</h5>
-                                    <ul>
-                                        ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            `;
-                        } else {
-                            // Default details for other projects
-                            const detailsContent = document.getElementById('project-details-content');
-                            detailsContent.innerHTML = `
-                                <div class="project-details-header">
-                                    <h4>${project.title}</h4>
-                                    <p>${project.description}</p>
-                                </div>
-                                
-                                <div class="project-details-section">
-                                    <h5>Technology Stack</h5>
-                                    <div class="tech-stack-grid">
-                                        ${project.tech_stack.map(tech => `<span class="tech-badge">${tech}</span>`).join('')}
-                                    </div>
-                                </div>
-                                
-                                <div class="project-details-section">
-                                    <h5>Key Features</h5>
-                                    <ul>
-                                        ${project.highlights.map(highlight => `<li>${highlight}</li>`).join('')}
-                                    </ul>
-                                </div>
-                            `;
-                        }
-                        
-                        // Show the details modal
-                        detailsModal.classList.add('active');
-                        document.body.style.overflow = 'hidden';
-                        
-                        // Re-initialize feather icons for the new content
-                        if (typeof feather !== 'undefined') {
-                            feather.replace();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error loading project details:', error);
-                    });
-            });
-        }
     });
 }
 

@@ -29,7 +29,8 @@ def get_projects():
             ],
             "interactive": False,
             "demo_type": "mobile",
-            "image_class": "mobile-app-image"
+            "image_class": "mobile-app-image",
+            "github_url": "https://github.com/Peter07odia/homify-mvp"
         },
         {
             "id": "e-commerce-fitting-room",
@@ -60,7 +61,8 @@ def get_projects():
                 "Save costs on physical inventory and returns processing",
                 "Collect valuable customer data for future product development"
             ],
-            "partnership": "We're open to partnerships with fashion retailers, e-commerce platforms, and technology companies. Contact us to explore collaboration opportunities for implementing this technology in your business."
+            "partnership": "We're open to partnerships with fashion retailers, e-commerce platforms, and technology companies. Contact us to explore collaboration opportunities for implementing this technology in your business.",
+            "github_url": "https://github.com/Peter07odia/colors-of-life"
         },
         {
             "id": "smart-gold-choices",
@@ -92,11 +94,14 @@ def get_projects():
             "demo_type": "carousel",
             "image_class": "fintech-image",
             "website_url": "https://www.smartgoldchoices.com",
+            "cover_image": "/static/images/smart-gold-screenshots/smart-gold-homepage.png",
             "carousel_images": [
-                "/static/images/smart-gold-screenshots/website-homepage.png",
-                "/static/images/smart-gold-screenshots/n8n-blog-workflow.png", 
-                "/static/images/smart-gold-screenshots/workflow-execution.png"
-            ]
+                "/static/images/smart-gold-screenshots/smart-gold-homepage.png",
+                "/static/images/smart-gold-workflows/n8n-automation-workflow.png", 
+                "/static/images/smart-gold-workflows/workflow-executions.png",
+                "/static/images/smart-gold-screenshots/lead-capture-modal.png"
+            ],
+            "github_url": "https://github.com/Peter07odia/Smartgoldchoices"
         },
         {
             "id": "nvidia-vss-safety-analytics",
@@ -122,7 +127,8 @@ def get_projects():
             ],
             "interactive": True,
             "demo_type": "generator",
-            "image_class": "api-image"
+            "image_class": "api-image",
+            "github_url": "https://github.com/Peter07odia/video-search-and-summarization"
         },
 
     ]

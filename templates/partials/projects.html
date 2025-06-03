@@ -38,10 +38,16 @@
                             <i data-feather="play"></i>
                         </button>
                         {% endif %}
-                        <button class="secondary-btn details-btn">
-                            View Details
-                            <i data-feather="arrow-right"></i>
-                        </button>
+                        {% if project.website_url %}
+                        <a href="{{ project.website_url }}" target="_blank" class="primary-btn website-btn">
+                            Visit Website
+                            <i data-feather="external-link"></i>
+                        </a>
+                        {% endif %}
+                        <a href="{{ project.github_url }}" target="_blank" class="secondary-btn github-btn">
+                            View on GitHub
+                            <i data-feather="github"></i>
+                        </a>
                     </div>
                 </div>
                 
@@ -112,6 +118,30 @@
                             </div>
                         </div>
                     </div>
+                    {% elif project.id == 'smart-gold-choices' %}
+                    <!-- Carousel for Smart Gold Choices project -->
+                    <div class="project-carousel">
+                        <div class="carousel-container">
+                            <div class="carousel-slide" id="project-carousel-{{ project.id }}">
+                                {% for image in project.carousel_images %}
+                                <img src="{{ image }}" alt="Smart Gold Choices {{ loop.index0 + 1 }}" class="carousel-image {% if loop.first %}active{% endif %}">
+                                {% endfor %}
+                            </div>
+                            <!-- Navigation Arrows -->
+                            <button class="carousel-btn prev" data-carousel="project-carousel-{{ project.id }}">
+                                <i data-feather="chevron-left"></i>
+                            </button>
+                            <button class="carousel-btn next" data-carousel="project-carousel-{{ project.id }}">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                            <!-- Carousel Indicators -->
+                            <div class="carousel-indicators">
+                                {% for image in project.carousel_images %}
+                                <span class="indicator {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}"></span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                     {% else %}
                     <div class="project-image {{ project.image_class }}">
                         <div class="image-overlay"></div>
@@ -123,28 +153,12 @@
         </div>
     </div>
     
-    <!-- Project Details Modal -->
-    <div class="modal" id="project-details-modal">
-        <div class="modal-content glass-card">
-            <div class="modal-header">
-                <h3 id="details-title">Project Details</h3>
-                <button class="close-modal">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body" id="project-details-content">
-                <!-- Project details will be populated by JavaScript -->
-            </div>
-        </div>
-    </div>
-
     <!-- Project Demo Modal -->
     <div class="modal" id="project-demo-modal">
         <div class="modal-content glass-card">
             <div class="modal-header">
                 <h3 id="demo-title">Interactive Demo</h3>
-                <button class="close-modal">
+                <button class="close-modal" title="Return to Profile">
                     <i data-feather="x"></i>
                 </button>
             </div>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/glassmorphism.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Modal Test</h1>
+        
+        <!-- Test Project Card -->
+        <div class="project-card glass-card" data-project-id="test-project">
+            <div class="project-content">
+                <div class="project-header">
+                    <div class="project-category">Test Category</div>
+                    <h3 class="project-title">Test Project</h3>
+                </div>
+                <p class="project-description">This is a test project for debugging modal functionality.</p>
+                <div class="project-actions">
+                    <button class="secondary-btn details-btn">
+                        View Details
+                        <i data-feather="arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Project Details Modal -->
+    <div class="modal" id="project-details-modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3 id="details-title">Project Details</h3>
+                <button class="close-modal">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            
+            <div class="modal-body" id="project-details-content">
+                <p>Test content will be loaded here...</p>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mock API response for testing
+        function mockApiResponse() {
+            return Promise.resolve([
+                {
+                    id: "test-project",
+                    title: "Test Project Title",
+                    description: "This is a test project description.",
+                    tech_stack: ["JavaScript", "HTML", "CSS"],
+                    highlights: ["Feature 1", "Feature 2", "Feature 3"]
+                }
+            ]);
+        }
+        
+        // Replace fetch with mock for testing
+        const originalFetch = window.fetch;
+        window.fetch = function(url) {
+            if (url === '/api/projects') {
+                return Promise.resolve({
+                    ok: true,
+                    status: 200,
+                    json: () => mockApiResponse()
+                });
+            }
+            return originalFetch.apply(this, arguments);
+        };
+    </script>
+    <script src="static/js/main.js"></script>
+    <script src="static/js/projects.js"></script>
+    <script>
+        feather.replace();
+        console.log('Test page loaded');
+    </script>
+</body>
+</html> 

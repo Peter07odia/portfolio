@@ -204,6 +204,12 @@ function initializeProjectCarousels() {
         let currentIndex = 0;
         let slideInterval;
         
+        // Find navigation buttons and indicators for this carousel
+        const carouselContainer = carousel.closest('.project-carousel');
+        const prevBtn = carouselContainer ? carouselContainer.querySelector('.carousel-btn.prev') : null;
+        const nextBtn = carouselContainer ? carouselContainer.querySelector('.carousel-btn.next') : null;
+        const indicators = carouselContainer ? carouselContainer.querySelectorAll('.indicator') : null;
+        
         // Function to show a specific slide
         function showSlide(index) {
             // Hide all images
@@ -211,8 +217,20 @@ function initializeProjectCarousels() {
                 img.classList.remove('active');
             });
             
+            // Hide all indicators
+            if (indicators) {
+                indicators.forEach(indicator => {
+                    indicator.classList.remove('active');
+                });
+            }
+            
             // Show current image
             images[index].classList.add('active');
+            
+            // Show current indicator
+            if (indicators && indicators[index]) {
+                indicators[index].classList.add('active');
+            }
         }
         
         // Auto-slide function
@@ -221,18 +239,67 @@ function initializeProjectCarousels() {
             showSlide(currentIndex);
         }
         
+        // Function to go to next slide
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showSlide(currentIndex);
+        }
+        
+        // Function to go to previous slide
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showSlide(currentIndex);
+        }
+        
         // Start auto-sliding
-        slideInterval = setInterval(autoSlide, 3000); // Change slide every 3 seconds
+        function startAutoSlide() {
+            slideInterval = setInterval(autoSlide, 3000); // Change slide every 3 seconds
+        }
+        
+        // Stop auto-sliding
+        function stopAutoSlide() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+            }
+        }
+        
+        // Event listeners for navigation buttons
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function() {
+                stopAutoSlide();
+                nextSlide();
+                startAutoSlide(); // Restart auto-advance
+            });
+        }
+        
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function() {
+                stopAutoSlide();
+                prevSlide();
+                startAutoSlide(); // Restart auto-advance
+            });
+        }
+        
+        // Event listeners for indicators
+        if (indicators) {
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', function() {
+                    stopAutoSlide();
+                    currentIndex = index;
+                    showSlide(currentIndex);
+                    startAutoSlide(); // Restart auto-advance
+                });
+            });
+        }
+        
+        // Start auto-sliding
+        startAutoSlide();
         
         // Pause auto-slide on hover
-        carousel.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
-        });
+        carousel.addEventListener('mouseenter', stopAutoSlide);
         
         // Resume auto-slide on mouse leave
-        carousel.addEventListener('mouseleave', () => {
-            slideInterval = setInterval(autoSlide, 3000);
-        });
+        carousel.addEventListener('mouseleave', startAutoSlide);
         
         // Log that we've initialized this carousel
         console.log('Initialized project carousel with ID:', carousel.id);
@@ -241,10 +308,33 @@ function initializeProjectCarousels() {
 
 // Initialize modal functionality
 function initializeModals() {
+    console.log('Initializing modals...');
     const modal = document.getElementById('project-demo-modal');
     const detailsModal = document.getElementById('project-details-modal');
     
-    if (!modal && !detailsModal) return;
+    console.log('Demo modal found:', !!modal);
+    console.log('Details modal found:', !!detailsModal);
+    
+    if (!modal && !detailsModal) {
+        console.warn('No modals found to initialize');
+        return;
+    }
+    
+    // Helper function to close modal and return to profile
+    function closeModalAndReturnToProfile(modalElement) {
+        console.log('Closing modal and returning to profile');
+        modalElement.classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Smooth scroll to projects section (the profile/showcase area)
+        const projectsSection = document.getElementById('projects');
+        if (projectsSection) {
+            projectsSection.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+    }
     
     // Handle demo modal
     if (modal) {
@@ -254,16 +344,15 @@ function initializeModals() {
         // Close modal functionality
         if (closeModalBtn) {
             closeModalBtn.addEventListener('click', function() {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
+                closeModalAndReturnToProfile(modal);
             });
         }
         
         // Close modal when clicking outside
         modal.addEventListener('click', function(e) {
             if (e.target === modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
+                console.log('Closing demo modal (clicked outside)');
+                closeModalAndReturnToProfile(modal);
             }
         });
         
@@ -273,12 +362,25 @@ function initializeModals() {
                 const projectId = this.getAttribute('data-project-id');
                 const demoType = this.getAttribute('data-demo-type');
                 
+                console.log('Opening demo modal for project:', projectId, 'type:', demoType);
+                
                 // Set modal title based on project
                 const projectTitleEl = document.querySelector(`.project-card[data-project-id="${projectId}"] .project-title`);
                 const demoTitle = document.getElementById('demo-title');
                 
                 if (projectTitleEl && demoTitle) {
-                    demoTitle.textContent = projectTitleEl.textContent;
+                    demoTitle.textContent = `${projectTitleEl.textContent} Demo`;
+                }
+                
+                // Show appropriate demo content
+                const demoContents = modal.querySelectorAll('.demo-content');
+                demoContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                const activeDemo = document.getElementById(`${demoType}-demo`);
+                if (activeDemo) {
+                    activeDemo.classList.add('active');
                 }
                 
                 // Show modal
@@ -295,16 +397,15 @@ function initializeModals() {
         // Close details modal functionality
         if (closeDetailsBtn) {
             closeDetailsBtn.addEventListener('click', function() {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
+                closeModalAndReturnToProfile(detailsModal);
             });
         }
         
         // Close details modal when clicking outside
         detailsModal.addEventListener('click', function(e) {
             if (e.target === detailsModal) {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
+                console.log('Closing details modal (clicked outside)');
+                closeModalAndReturnToProfile(detailsModal);
             }
         });
     }
@@ -313,92 +414,91 @@ function initializeModals() {
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (modal && modal.classList.contains('active')) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
+                console.log('Closing demo modal (ESC key)');
+                closeModalAndReturnToProfile(modal);
             }
             if (detailsModal && detailsModal.classList.contains('active')) {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
+                console.log('Closing details modal (ESC key)');
+                closeModalAndReturnToProfile(detailsModal);
             }
         }
     });
+    
+    console.log('Modal initialization complete');
 }
 
-// Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    initializeModals();
-});
-                demoTitle.textContent = `${projectTitleEl.textContent} Demo`;
-            }
-            
-            // Show appropriate demo content
-            const demoContents = modal.querySelectorAll('.demo-content');
-            demoContents.forEach(content => {
-                content.classList.remove('active');
-            });
-            
-            const activeDemo = document.getElementById(`${demoType}-demo`);
-            if (activeDemo) {
-                activeDemo.classList.add('active');
-            }
-            
-            // Show modal
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+// Setup Homify mobile carousel
+function setupHomifyCarousel() {
+    const carousel = document.getElementById('homify-carousel');
+    if (!carousel) return;
+    
+    const slides = carousel.querySelectorAll('.phone-screen-slide');
+    const prevBtn = document.getElementById('homify-prev');
+    const nextBtn = document.getElementById('homify-next');
+    
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    let slideInterval;
+    
+    // Function to show a specific slide
+    function showSlide(index) {
+        // Hide all slides
+        slides.forEach(slide => {
+            slide.classList.remove('active');
         });
-    });
+        
+        // Show current slide
+        slides[index].classList.add('active');
     }
     
-    // Handle details modal
-    if (detailsModal) {
-        const detailsCloseBtn = detailsModal.querySelector('.close-modal');
-        
-        // Close details modal functionality
-        if (detailsCloseBtn) {
-            detailsCloseBtn.addEventListener('click', function() {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
-            });
+    // Function to go to next slide
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Function to go to previous slide
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+    
+    // Auto-advance slides
+    function startAutoSlide() {
+        slideInterval = setInterval(nextSlide, 4000); // Change slide every 4 seconds
+    }
+    
+    // Stop auto-advance
+    function stopAutoSlide() {
+        if (slideInterval) {
+            clearInterval(slideInterval);
         }
-        
-        // Close details modal when clicking outside
-        detailsModal.addEventListener('click', function(e) {
-            if (e.target === detailsModal) {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
-        
-        // Close details modal with ESC key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && detailsModal.classList.contains('active')) {
-                detailsModal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        });
     }
     
-    // Close demo modal
-    if (modal && closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
+    // Event listeners for navigation buttons
+    if (nextBtn) {
+        nextBtn.addEventListener('click', function() {
+            stopAutoSlide();
+            nextSlide();
+            startAutoSlide(); // Restart auto-advance
         });
     }
     
-    // Close modal when clicking outside content
-    modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
-        }
-    });
+    if (prevBtn) {
+        prevBtn.addEventListener('click', function() {
+            stopAutoSlide();
+            prevSlide();
+            startAutoSlide(); // Restart auto-advance
+        });
+    }
     
-    // Close modal with ESC key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            modal.classList.remove('active');
-            document.body.style.overflow = ''; // Restore scrolling
-        }
-    });
+    // Pause auto-slide on hover
+    carousel.addEventListener('mouseenter', stopAutoSlide);
+    carousel.addEventListener('mouseleave', startAutoSlide);
+    
+    // Start auto-slide
+    startAutoSlide();
+    
+    console.log('Homify mobile carousel initialized with', slides.length, 'slides');
 }
