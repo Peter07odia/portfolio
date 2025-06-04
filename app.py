@@ -52,11 +52,18 @@ app.config["MAIL_DEFAULT_SENDER"] = os.environ.get("MAIL_DEFAULT_SENDER")
 db.init_app(app)
 mail = Mail(app)
 
-# Create database tables
-with app.app_context():
-    # Import models to register them with SQLAlchemy
-    import models  # noqa: F401
-    db.create_all()
+# Create database tables (with error handling for serverless environment)
+def init_db():
+    try:
+        with app.app_context():
+            # Import models here to avoid circular imports
+            from models import Contact, Project, TechStack, Highlight, Visitor, GalleryImage  # noqa: F401
+            db.create_all()
+    except Exception as e:
+        app.logger.error(f"Database initialization error: {e}")
+
+# Initialize database
+init_db()
 
 # Import routes after app is initialized to avoid circular imports
 from routes import *  # noqa: E402, F401
