@@ -3,19 +3,7 @@
   "functions": {
     "index.py": {
       "runtime": "@vercel/python",
-      "excludeFiles": [
-        "static/images/ai-gallery/**",
-        "static/images/homify-screens/**", 
-        "static/images/project-carousel/**",
-        "static/images/smart-gold-screenshots/**",
-        "mcp-vercel/**",
-        "attached_assets/**",
-        "__pycache__/**",
-        "*.md",
-        "test_*.py",
-        "*.cache/**",
-        ".git/**"
-      ]
+      "excludeFiles": "{static/images/**,mcp-vercel/**,attached_assets/**,__pycache__/**,*.md,test_*,*.cache/**,.git/**}"
     }
   },
   "routes": [
