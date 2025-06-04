@@ -1,10 +1,6 @@
 from app import db
 from datetime import datetime
 
-# Get db instance from current app context
-def get_db():
-    return current_app.extensions['sqlalchemy']
-
 class Contact(db.Model):
     """Model for storing contact form submissions"""
     id = db.Column(db.Integer, primary_key=True)
