@@ -1,0 +1,27 @@
+# Git history
+.git/
+
+# MCP tools and development files
+mcp-vercel/
+attached_assets/
+__pycache__/
+
+# Large assets (keep only essential ones)
+generated-icon.png
+
+# Development files
+test_*.py
+test_*.html
+.vercel/
+*.md
+
+# Environment and config files not needed in production
+.env
+env-template.txt
+run.sh
+deploy.sh
+uv.lock
+claude-mcp-config.json
+
+# Keep only essential files for the app to run
+# app.py, index.py, routes.py, models.py, requirements.txt, vercel.json, templates/, static/ (essential only) 

@@ -2,17 +2,26 @@
   "version": 2,
   "builds": [
     {
-      "src": "./test_minimal.py",
+      "src": "./index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/test_minimal.py"
+      "dest": "/index.py"
     }
   ],
-  "env": {
-    "PYTHONPATH": "./"
+  "functions": {
+    "index.py": {
+      "includeFiles": "templates/**",
+      "excludeFiles": [
+        "static/images/ai-gallery/**",
+        "static/images/homify-screens/**", 
+        "static/images/project-carousel/**",
+        "mcp-vercel/**",
+        "attached_assets/**"
+      ]
+    }
   }
 } 
