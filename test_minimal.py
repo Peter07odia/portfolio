@@ -10,5 +10,5 @@ def home():
 def health():
     return {"status": "ok", "message": "Application is running"}
 
-if __name__ == "__main__":
-    app.run(debug=True) 
+# For Vercel, the app variable needs to be available at module level
+# No handler function needed 

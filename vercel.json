@@ -11,5 +11,8 @@
       "src": "/(.*)",
       "dest": "/test_minimal.py"
     }
-  ]
+  ],
+  "env": {
+    "PYTHONPATH": "./"
+  }
 } 
