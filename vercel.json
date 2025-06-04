@@ -1,19 +1,8 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "./index.py",
-      "use": "@vercel/python"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.py"
-    }
-  ],
   "functions": {
     "index.py": {
+      "runtime": "@vercel/python",
       "excludeFiles": [
         "static/images/ai-gallery/**",
         "static/images/homify-screens/**", 
@@ -28,5 +17,11 @@
         ".git/**"
       ]
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.py"
+    }
+  ]
 } 
