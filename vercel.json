@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "functions": {
-    "index.py": {
-      "runtime": "@vercel/python",
-      "excludeFiles": "{static/images/**,mcp-vercel/**,attached_assets/**,__pycache__/**,*.md,test_*,*.cache/**,.git/**}"
+  "builds": [
+    {
+      "src": "./index.py",
+      "use": "@vercel/python"
     }
-  },
+  ],
   "routes": [
     {
       "src": "/(.*)",
