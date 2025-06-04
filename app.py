@@ -36,7 +36,9 @@ if database_url:
     }
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 else:
-    raise RuntimeError("DATABASE_URL environment variable not set")
+    # Default to SQLite for production if no DATABASE_URL is provided
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///portfolio.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 # Configure Flask-Mail (optional, for contact form)
 app.config["MAIL_SERVER"] = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
