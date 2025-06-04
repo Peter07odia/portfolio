@@ -206,4 +206,7 @@ node_modules/
 .tern-port
 
 # Vercel
-.vercel 
+.vercel
+
+# MCP Vercel (embedded git repository)
+mcp-vercel/ 

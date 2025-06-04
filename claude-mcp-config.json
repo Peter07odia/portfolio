@@ -1,0 +1,28 @@
+{
+  "mcpServers": {
+    "vercel": {
+      "command": "node",
+      "args": ["/Users/ifyodia/Downloads/AiFounderShowcase/mcp-vercel/build/index.js"],
+      "env": {
+        "VERCEL_API_TOKEN": "HI5fUkWrWpvk6zWOiwUGKgFh"
+      }
+    },
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--access-token", "your_supabase_access_token_here"],
+      "env": {}
+    },
+    "firecrawl": {
+      "command": "npx",
+      "args": ["-y", "firecrawl-mcp"],
+      "env": {
+        "FIRECRAWL_API_KEY": "fc-dc5823c6804a4f34abf594cb8b2b7154"
+      }
+    },
+    "docker": {
+      "command": "uvx",
+      "args": ["mcp-server-docker"],
+      "env": {}
+    }
+  }
+}

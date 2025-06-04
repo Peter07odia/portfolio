@@ -1,0 +1,30 @@
+# Copy these environment variables to Vercel
+# Go to your Vercel project > Settings > Environment Variables
+
+# REQUIRED VARIABLES
+DATABASE_URL=postgresql://username:password@hostname:5432/database_name
+SESSION_SECRET=your-super-secret-32-character-key-here
+FLASK_ENV=production
+
+# OPTIONAL EMAIL VARIABLES (for contact form)
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-gmail-app-password
+MAIL_DEFAULT_SENDER=your-email@gmail.com
+
+# HOW TO GET THESE VALUES:
+
+# DATABASE_URL:
+# - Option 1: Create in Vercel (Storage tab > Create Database > Postgres)
+# - Option 2: Use Supabase (free 500MB): supabase.com
+# - Option 3: Use Railway (free 1GB): railway.app
+
+# SESSION_SECRET:
+# Generate a random 32+ character string, example:
+# my-super-secret-session-key-12345
+
+# EMAIL (Gmail setup):
+# 1. Enable 2-factor authentication on Gmail
+# 2. Generate app-specific password: myaccount.google.com/apppasswords
+# 3. Use that password (not your regular Gmail password) 
