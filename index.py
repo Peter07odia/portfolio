@@ -1,11 +1,6 @@
 from app import app
 
-# This is the entry point for Vercel
-def handler(request):
-    return app(request.environ, request.start_response)
-
-# For Vercel, we need to expose the app
-application = app
-
+# For Vercel, we need to expose the app as 'app'
+# This is the entry point that Vercel will use
 if __name__ == "__main__":
     app.run(debug=True) 
