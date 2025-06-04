@@ -1,19 +1,25 @@
-# Git history
+# Git history and caches
 .git/
-
-# MCP tools and development files
-mcp-vercel/
-attached_assets/
+*.cache/
 __pycache__/
 
-# Large assets (keep only essential ones)
+# Large static assets (serve via CDN instead)
+static/images/ai-gallery/
+static/images/homify-screens/
+static/images/project-carousel/
+static/images/smart-gold-screenshots/
 generated-icon.png
 
-# Development files
+# Development and build tools
+mcp-vercel/
+attached_assets/
+.vercel/
+node_modules/
+
+# Documentation and tests
+*.md
 test_*.py
 test_*.html
-.vercel/
-*.md
 
 # Environment and config files not needed in production
 .env
@@ -23,5 +29,7 @@ deploy.sh
 uv.lock
 claude-mcp-config.json
 
-# Keep only essential files for the app to run
-# app.py, index.py, routes.py, models.py, requirements.txt, vercel.json, templates/, static/ (essential only) 
+# Build artifacts and source maps
+*.map
+dist/
+build/ 

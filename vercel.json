@@ -14,13 +14,18 @@
   ],
   "functions": {
     "index.py": {
-      "includeFiles": "templates/**",
       "excludeFiles": [
         "static/images/ai-gallery/**",
         "static/images/homify-screens/**", 
         "static/images/project-carousel/**",
+        "static/images/smart-gold-screenshots/**",
         "mcp-vercel/**",
-        "attached_assets/**"
+        "attached_assets/**",
+        "__pycache__/**",
+        "*.md",
+        "test_*.py",
+        "*.cache/**",
+        ".git/**"
       ]
     }
   }
