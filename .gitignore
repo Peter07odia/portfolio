@@ -209,4 +209,12 @@ node_modules/
 .vercel
 
 # MCP Vercel (embedded git repository)
-mcp-vercel/ 
+mcp-vercel/
+
+# Large files (to keep deployment under 250MB limit)
+*.pptx
+*.ppt
+static/presentations/
+# Specific large image files
+static/images/smart-gold-screenshots/smart-gold-homepage.png
+static/images/smart-gold-screenshots/lead-capture-modal.png 

@@ -6,9 +6,16 @@ from models import Contact, Project, TechStack, Highlight, Visitor, GalleryImage
 from werkzeug.utils import secure_filename
 import os
 import json
-import imagehash
 from PIL import Image
 from datetime import datetime
+
+# Try to import imagehash, handle gracefully if not available
+try:
+    import imagehash
+    IMAGEHASH_AVAILABLE = True
+except ImportError:
+    IMAGEHASH_AVAILABLE = False
+    app.logger.warning("imagehash not available - duplicate detection will be disabled")
 
 def ensure_db_tables():
     """Ensure database tables are created"""
@@ -414,6 +421,12 @@ def bulk_import_gallery_images():
 def find_duplicate_images():
     """Find and optionally remove duplicate images based on visual similarity"""
     # This would typically have authentication
+    
+    # Check if imagehash is available
+    if not IMAGEHASH_AVAILABLE:
+        flash("Image duplicate detection is not available. The imagehash library is required for this feature.", "error")
+        return redirect(url_for("admin_gallery"))
+    
     duplicate_sets = []
     images_processed = 0
     duplicates_found = 0
