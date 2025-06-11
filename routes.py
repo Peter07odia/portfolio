@@ -39,15 +39,16 @@ def index():
         app.logger.error(f"Error tracking visitor: {e}")
     
     # Get fresh project data from the file (to ensure latest changes are shown)
-    fresh_projects = get_projects()
+    projects = get_projects()
     
+    # Optional: Try to sync with database for analytics, but don't let it affect display
     try:
         # Delete existing projects in the database to force refresh
         Project.query.delete()
         db.session.commit()
         
-        # Save fresh projects to database
-        for proj in fresh_projects:
+        # Save fresh projects to database for analytics
+        for proj in projects:
             new_project = Project(
                 project_id=proj['id'],
                 title=proj['title'],
@@ -69,55 +70,9 @@ def index():
             db.session.add(new_project)
         
         db.session.commit()
-        
-        # Now fetch the updated projects from database
-        db_projects = Project.query.all()
-        
-        if db_projects:
-            projects = []
-            for project in db_projects:
-                # Get the original project data to fetch new properties not in the database yet
-                original_project = None
-                for proj in fresh_projects:
-                    if proj['id'] == project.project_id:
-                        original_project = proj
-                        break
-                
-                project_dict = {
-                    'id': project.project_id,
-                    'title': project.title,
-                    'category': project.category,
-                    'description': project.description,
-                    'interactive': project.interactive,
-                    'demo_type': project.demo_type,
-                    'image_class': project.image_class,
-                    'tech_stack': [tech.name for tech in project.tech_stack],
-                    'highlights': [highlight.text for highlight in project.highlights]
-                }
-                
-                # Add additional properties from original projects if they exist
-                if original_project:
-                    if 'images' in original_project:
-                        project_dict['images'] = original_project['images']
-                    if 'carousel_images' in original_project:
-                        project_dict['carousel_images'] = original_project['carousel_images']
-                    if 'benefits' in original_project:
-                        project_dict['benefits'] = original_project['benefits']
-                    if 'partnership' in original_project:
-                        project_dict['partnership'] = original_project['partnership']
-                    if 'github_url' in original_project:
-                        project_dict['github_url'] = original_project['github_url']
-                    if 'website_url' in original_project:
-                        project_dict['website_url'] = original_project['website_url']
-                
-                projects.append(project_dict)
-        else:
-            # If no projects in DB, use the static list
-            projects = fresh_projects
     except Exception as e:
-        app.logger.error(f"Database error, falling back to static projects: {e}")
-        # If database operations fail, just use the static projects
-        projects = fresh_projects
+        app.logger.error(f"Database sync error (continuing with display): {e}")
+        # Continue anyway - database sync is optional
     
     return render_template("index.html", projects=projects)
 
