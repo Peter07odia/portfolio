@@ -71,17 +71,6 @@ except Exception as e:
     logging.warning(f"Mail initialization failed: {e}")
     mail = None
 
-# Import routes after app is initialized to avoid circular imports
-try:
-    from routes import *  # noqa: E402, F401
-except ImportError as e:
-    logging.error(f"Failed to import routes: {e}")
-    
-    # Fallback route
-    @app.route('/')
-    def fallback_home():
-        return """
-        <h1>AI Founder Showcase</h1>
-        <p>Application is loading...</p>
-        <p>Some features may not be available yet.</p>
-        """
+# Import and register routes after app is initialized to avoid circular imports
+from routes import register_routes
+register_routes(app)

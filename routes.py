@@ -1,8 +1,6 @@
 from flask import render_template, request, jsonify, flash, redirect, url_for, session
-from app import app, mail, db
 from flask_mail import Message
 from projects import get_projects
-from models import Contact, Project, TechStack, Highlight, Visitor
 import os
 import json
 from datetime import datetime
@@ -10,71 +8,28 @@ from datetime import datetime
 def ensure_db_tables():
     """Ensure database tables are created"""
     try:
+        from app import app, db
         with app.app_context():
             db.create_all()
     except Exception as e:
-        app.logger.error(f"Database initialization error: {e}")
+        print(f"Database initialization error: {e}")
 
-@app.route("/")
-def index():
-    """Render the home page with all sections"""
-    # Ensure database tables exist
-    ensure_db_tables()
+def register_routes(app):
+    """Register all routes with the Flask app"""
     
-    # Track visitor (optional, with error handling)
-    try:
-        if request.headers.get('X-Forwarded-For'):
-            visitor_ip = request.headers.get('X-Forwarded-For').split(',')[0].strip()
-        else:
-            visitor_ip = request.remote_addr
-        
-        visitor = Visitor(
-            ip_address=visitor_ip,
-            user_agent=request.user_agent.string,
-            page_visited='home'
-        )
-        db.session.add(visitor)
-        db.session.commit()
-    except Exception as e:
-        app.logger.error(f"Error tracking visitor: {e}")
+    @app.route("/")
+    def index():
+        """Render the home page with all sections"""
+        # Get fresh project data from the file
+        projects = get_projects()
+        return render_template("index.html", projects=projects)
     
-    # Get fresh project data from the file (to ensure latest changes are shown)
-    projects = get_projects()
-    
-    # Optional: Try to sync with database for analytics, but don't let it affect display
-    try:
-        # Delete existing projects in the database to force refresh
-        Project.query.delete()
-        db.session.commit()
-        
-        # Save fresh projects to database for analytics
-        for proj in projects:
-            new_project = Project(
-                project_id=proj['id'],
-                title=proj['title'],
-                category=proj['category'],
-                description=proj['description'],
-                interactive=proj['interactive'],
-                demo_type=proj.get('demo_type'),
-                image_class=proj.get('image_class')
-            )
-            
-            # Add tech stack
-            for tech in proj['tech_stack']:
-                new_project.tech_stack.append(TechStack(name=tech))
-            
-            # Add highlights
-            for highlight in proj['highlights']:
-                new_project.highlights.append(Highlight(text=highlight))
-            
-            db.session.add(new_project)
-        
-        db.session.commit()
-    except Exception as e:
-        app.logger.error(f"Database sync error (continuing with display): {e}")
-        # Continue anyway - database sync is optional
-    
-    return render_template("index.html", projects=projects)
+    @app.route("/api/projects")
+    def api_projects():
+        """API endpoint to get all projects with their data"""
+        from flask import jsonify
+        projects_data = get_projects()
+        return jsonify(projects_data)
 
 @app.route("/send-message", methods=["POST"])
 def send_message():
@@ -135,12 +90,5 @@ def admin_stats():
         contact_count=contact_count,
         visitors_by_date=visitors_by_date
     )
-
-@app.route("/api/projects")
-def api_projects():
-    """API endpoint to get all projects with their data"""
-    # Get project data from file
-    projects_data = get_projects()
-    return jsonify(projects_data)
 
 
