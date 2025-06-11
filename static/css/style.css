@@ -791,39 +791,7 @@ section {
 }
 
 .mobile-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(112, 0, 255, 0.8);
-    border: none;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.mobile-nav-btn:hover {
-    background: rgba(112, 0, 255, 1);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.mobile-nav-btn.prev {
-    left: -15px;
-}
-
-.mobile-nav-btn.next {
-    right: -15px;
-}
-
-.mobile-nav-btn i {
-    color: white;
-    width: 16px;
-    height: 16px;
+    display: none;
 }
 
 /* STANDARD CAROUSEL */
@@ -866,39 +834,7 @@ section {
 }
 
 .carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.7);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-}
-
-.carousel-nav:hover {
-    background: rgba(0, 0, 0, 0.9);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.carousel-nav.prev {
-    left: 10px;
-}
-
-.carousel-nav.next {
-    right: 10px;
-}
-
-.carousel-nav i {
-    color: white;
-    width: 20px;
-    height: 20px;
+    display: none;
 }
 
 .carousel-indicators {
@@ -924,6 +860,44 @@ section {
 .carousel-indicators .indicator.active {
     background: var(--color-blue);
     transform: scale(1.2);
+}
+
+/* Carousel scroll hint */
+.carousel-scroll-hint {
+    position: absolute;
+    bottom: 45px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    opacity: 0.8;
+    pointer-events: none;
+    z-index: 5;
+    animation: fadeInOut 4s infinite;
+}
+
+@keyframes fadeInOut {
+    0%, 80%, 100% { opacity: 0.8; }
+    40% { opacity: 0.4; }
+}
+
+.mobile-scroll-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 8px;
+    font-size: 9px;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 5;
+    animation: fadeInOut 4s infinite;
 }
 
 /* SINGLE IMAGE */
@@ -1109,6 +1083,18 @@ section {
 .project-actions i {
     width: 16px;
     height: 16px;
+}
+
+.pdf-btn {
+    background: rgba(231, 76, 60, 0.1) !important;
+    border-color: #e74c3c !important;
+    color: #e74c3c !important;
+}
+
+.pdf-btn:hover {
+    background: #e74c3c !important;
+    border-color: #e74c3c !important;
+    color: white !important;
 }
 
 /* TABLET RESPONSIVE */

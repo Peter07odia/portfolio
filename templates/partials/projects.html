@@ -32,13 +32,8 @@
                                     </div>
                                     {% endfor %}
                                 </div>
-                                <!-- Mobile Navigation -->
-                                <button class="mobile-nav-btn prev" data-target="{{ project.id }}-mobile">
-                                    <i data-feather="chevron-left"></i>
-                                </button>
-                                <button class="mobile-nav-btn next" data-target="{{ project.id }}-mobile">
-                                    <i data-feather="chevron-right"></i>
-                                </button>
+                                <!-- Mobile Scroll Hint -->
+                                <div class="mobile-scroll-hint">Swipe to explore</div>
                             </div>
                         </div>
                     {% elif project.images.carousel %}
@@ -61,13 +56,8 @@
                                 </div>
                                 {% endfor %}
                             </div>
-                            <!-- Carousel Navigation -->
-                            <button class="carousel-nav prev" data-target="{{ project.id }}">
-                                <i data-feather="chevron-left"></i>
-                            </button>
-                            <button class="carousel-nav next" data-target="{{ project.id }}">
-                                <i data-feather="chevron-right"></i>
-                            </button>
+                            <!-- Carousel Scroll Hint -->
+                            <div class="carousel-scroll-hint">Auto-playing • Touch to explore</div>
                         </div>
                     {% else %}
                         <!-- Single Image or Placeholder -->
@@ -128,6 +118,13 @@
                         <a href="{{ project.github_url }}" target="_blank" class="secondary-btn github-btn">
                             <i data-feather="github"></i>
                             View Code
+                        </a>
+                        {% endif %}
+                        
+                        {% if project.pdf_url %}
+                        <a href="{{ project.pdf_url }}" target="_blank" class="secondary-btn pdf-btn">
+                            <i data-feather="file-text"></i>
+                            View Documentation
                         </a>
                         {% endif %}
                     </div>

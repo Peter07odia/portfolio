@@ -113,7 +113,8 @@ def get_projects():
                 "primary": "placeholder",
                 "carousel": []
             },
-            "github_url": "https://github.com/Peter07odia/video-search-and-summarization"
+            "github_url": "https://github.com/Peter07odia/video-search-and-summarization",
+            "pdf_url": "/static/pdfs/AI_Safety_Agent_MVP_for_SMBs.pdf"
         }
     ]
     

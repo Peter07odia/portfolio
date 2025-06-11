@@ -52,9 +52,7 @@ function initializeCarousels() {
             showSlide(currentSlide);
         }
         
-        // Event listeners
-        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        // Navigation buttons are now hidden via CSS - no event listeners needed
         
         // Auto-play functionality (optional)
         let autoplayInterval;
@@ -137,9 +135,7 @@ function initializeMobileCarousels() {
             showSlide(currentSlide);
         }
         
-        // Event listeners
-        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+        // Navigation buttons are now hidden via CSS - no event listeners needed
         
         // Auto-play for mobile screens
         let autoplayInterval = setInterval(nextSlide, 4000);

@@ -263,22 +263,7 @@ function initializeProjectCarousels() {
             }
         }
         
-        // Event listeners for navigation buttons
-        if (nextBtn) {
-            nextBtn.addEventListener('click', function() {
-                stopAutoSlide();
-                nextSlide();
-                startAutoSlide(); // Restart auto-advance
-            });
-        }
-        
-        if (prevBtn) {
-            prevBtn.addEventListener('click', function() {
-                stopAutoSlide();
-                prevSlide();
-                startAutoSlide(); // Restart auto-advance
-            });
-        }
+        // Navigation buttons are now hidden via CSS - no event listeners needed
         
         // Event listeners for indicators
         if (indicators) {
@@ -476,22 +461,7 @@ function setupHomifyCarousel() {
         }
     }
     
-    // Event listeners for navigation buttons
-    if (nextBtn) {
-        nextBtn.addEventListener('click', function() {
-            stopAutoSlide();
-            nextSlide();
-            startAutoSlide(); // Restart auto-advance
-        });
-    }
-    
-    if (prevBtn) {
-        prevBtn.addEventListener('click', function() {
-            stopAutoSlide();
-            prevSlide();
-            startAutoSlide(); // Restart auto-advance
-        });
-    }
+        // Navigation buttons are now hidden via CSS - no event listeners needed
     
     // Pause auto-slide on hover
     carousel.addEventListener('mouseenter', stopAutoSlide);
