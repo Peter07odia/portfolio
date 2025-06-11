@@ -67,15 +67,4 @@ class Visitor(db.Model):
     def __repr__(self):
         return f'<Visitor {self.ip_address} - {self.page_visited}>'
 
-class GalleryImage(db.Model):
-    """Model for storing AI-generated image gallery items"""
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(255), nullable=False)
-    title = db.Column(db.String(100), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    category = db.Column(db.String(50), nullable=False)
-    tool = db.Column(db.String(100), nullable=True)  # AI tool used to generate the image
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    
-    def __repr__(self):
-        return f'<GalleryImage {self.title}>'
+

@@ -8,271 +8,132 @@
         <div class="projects-container">
             {% for project in projects %}
             <div class="project-card glass-card fade-in" data-project-id="{{ project.id }}">
+                
+                <!-- Project Image -->
+                <div class="project-image-container">
+                    {% if project.demo_type == 'mobile' and project.images.mobile_carousel %}
+                        <!-- Mobile App Display -->
+                        <div class="mobile-app-showcase">
+                            <div class="phone-frame">
+                                <div class="phone-screen">
+                                    {% for image in project.images.mobile_carousel %}
+                                    <div class="phone-screen-slide {% if loop.first %}active{% endif %}">
+                                        {% if image != 'placeholder' %}
+                                        <img src="{{ url_for('static', filename=image.replace('/static/', '')) }}" 
+                                             alt="{{ project.title }} - Screen {{ loop.index }}" 
+                                             class="phone-image"
+                                             onerror="this.parentNode.innerHTML='<div class=\'placeholder-content\'><i data-feather=\'smartphone\'></i><p>Image {{ loop.index }}</p></div>'">
+                                        {% else %}
+                                        <div class="placeholder-content">
+                                            <i data-feather="smartphone"></i>
+                                            <p>Screen {{ loop.index }}</p>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <!-- Mobile Navigation -->
+                                <button class="mobile-nav-btn prev" data-target="{{ project.id }}-mobile">
+                                    <i data-feather="chevron-left"></i>
+                                </button>
+                                <button class="mobile-nav-btn next" data-target="{{ project.id }}-mobile">
+                                    <i data-feather="chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    {% elif project.images.carousel %}
+                        <!-- Standard Carousel -->
+                        <div class="project-carousel" data-carousel="{{ project.id }}">
+                            <div class="carousel-wrapper">
+                                {% for image in project.images.carousel %}
+                                <div class="carousel-slide {% if loop.first %}active{% endif %}">
+                                    {% if image != 'placeholder' %}
+                                    <img src="{{ url_for('static', filename=image.replace('/static/', '')) }}" 
+                                         alt="{{ project.title }} - Image {{ loop.index }}" 
+                                         class="carousel-image"
+                                         onerror="this.src=''; this.parentNode.innerHTML='<div class=\'placeholder-content\'><i data-feather=\'image\'></i><p>Project Image {{ loop.index }}</p></div>'">
+                                    {% else %}
+                                    <div class="placeholder-content">
+                                        <i data-feather="image"></i>
+                                        <p>Project Image {{ loop.index }}</p>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Carousel Navigation -->
+                            <button class="carousel-nav prev" data-target="{{ project.id }}">
+                                <i data-feather="chevron-left"></i>
+                            </button>
+                            <button class="carousel-nav next" data-target="{{ project.id }}">
+                                <i data-feather="chevron-right"></i>
+                            </button>
+                        </div>
+                    {% else %}
+                        <!-- Single Image or Placeholder -->
+                        <div class="single-image">
+                            {% if project.images.primary and project.images.primary != 'placeholder' %}
+                            <img src="{{ url_for('static', filename=project.images.primary.replace('/static/', '')) }}" 
+                                 alt="{{ project.title }}" 
+                                 class="project-main-image"
+                                 onerror="this.parentNode.innerHTML='<div class=\'placeholder-content\'><i data-feather=\'code\'></i><p>{{ project.category }}</p></div>'">
+                            {% else %}
+                            <div class="placeholder-content">
+                                <i data-feather="code"></i>
+                                <p>{{ project.category }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Project Content -->
                 <div class="project-content">
                     <div class="project-header">
-                        <div class="project-category">{{ project.category }}</div>
+                        <span class="project-category">{{ project.category }}</span>
                         <h3 class="project-title">{{ project.title }}</h3>
                     </div>
                     
                     <p class="project-description">{{ project.description }}</p>
                     
+                    <!-- Tech Stack -->
                     <div class="project-tech">
-                        {% for tech in project.tech_stack %}
+                        {% for tech in project.tech_stack[:5] %}
                         <span class="tech-badge">{{ tech }}</span>
                         {% endfor %}
                     </div>
                     
+                    <!-- Key Highlights (limit to 2) -->
+                    {% if project.highlights %}
                     <div class="project-highlights">
                         <h4>Key Features</h4>
                         <ul>
-                            {% for highlight in project.highlights %}
+                            {% for highlight in project.highlights[:2] %}
                             <li>{{ highlight }}</li>
                             {% endfor %}
                         </ul>
                     </div>
+                    {% endif %}
                     
+                    <!-- Action Buttons -->
                     <div class="project-actions">
-                        {% if project.interactive %}
-                        <button class="primary-btn open-demo" data-project-id="{{ project.id }}" data-demo-type="{{ project.demo_type }}">
-                            Interactive Demo
-                            <i data-feather="play"></i>
-                        </button>
-                        {% endif %}
                         {% if project.website_url %}
                         <a href="{{ project.website_url }}" target="_blank" class="primary-btn website-btn">
-                            Visit Website
                             <i data-feather="external-link"></i>
+                            Visit Website
                         </a>
                         {% endif %}
+                        
+                        {% if project.github_url %}
                         <a href="{{ project.github_url }}" target="_blank" class="secondary-btn github-btn">
-                            View on GitHub
                             <i data-feather="github"></i>
+                            View Code
                         </a>
+                        {% endif %}
                     </div>
-                </div>
-                
-                <div class="project-visual">
-                    {% if project.id == 'homify-mvp' %}
-                    <!-- Mobile Phone Carousel for Homify MVP project -->
-                    <div class="mobile-phone-carousel">
-                        <div class="phone-frame">
-                            <div class="phone-screen">
-                                <div class="carousel-slide" id="homify-carousel">
-                                    <!-- Home/Welcome Screen -->
-                                    <div class="phone-screen-slide active">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-home.png') }}" alt="Homify Home Screen" class="phone-image">
-                                    </div>
-                                    <!-- Upload Photo Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-upload.png') }}" alt="Upload Photo Screen" class="phone-image">
-                                    </div>
-                                    <!-- Style Selection Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-styles.png') }}" alt="Style Selection Screen" class="phone-image">
-                                    </div>
-                                    <!-- Processing Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-processing.png') }}" alt="Processing Screen" class="phone-image">
-                                    </div>
-                                    <!-- Results Before/After Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-results.png') }}" alt="Results Before/After Screen" class="phone-image">
-                                    </div>
-                                    <!-- Save/Share Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-save.png') }}" alt="Save/Share Screen" class="phone-image">
-                                    </div>
-                                    <!-- Gallery Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-gallery.png') }}" alt="Gallery Screen" class="phone-image">
-                                    </div>
-                                    <!-- Settings Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-settings.png') }}" alt="Settings Screen" class="phone-image">
-                                    </div>
-                                    <!-- Profile Screen -->
-                                    <div class="phone-screen-slide">
-                                        <img src="{{ url_for('static', filename='images/homify-screens/homify-profile.png') }}" alt="Profile Screen" class="phone-image">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Navigation Arrows -->
-                            <button class="carousel-arrow carousel-arrow-left" id="homify-prev">
-                                <i data-feather="chevron-left"></i>
-                            </button>
-                            <button class="carousel-arrow carousel-arrow-right" id="homify-next">
-                                <i data-feather="chevron-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    {% elif project.id == 'e-commerce-fitting-room' %}
-                    <!-- Carousel for E-Commerce Virtual Fitting Room project -->
-                    <div class="project-carousel">
-                        <div class="carousel-container">
-                            <div class="carousel-slide" id="project-carousel-{{ project.id }}">
-                                <img src="/static/images/project-carousel/try-before-buy.png" alt="Colors of Life App" class="carousel-image active">
-                                <img src="/static/images/project-carousel/virtual-models.png" alt="Virtual Models" class="carousel-image">
-                                <img src="/static/images/project-carousel/body-scan.png" alt="Body Scan" class="carousel-image">
-                                <img src="/static/images/project-carousel/style-selection.png" alt="Style Selection" class="carousel-image">
-                                <img src="/static/images/project-carousel/signup.png" alt="App Sign Up" class="carousel-image">
-                            </div>
-                        </div>
-                    </div>
-                    {% elif project.id == 'smart-gold-choices' %}
-                    <!-- Carousel for Smart Gold Choices project -->
-                    <div class="project-carousel">
-                        <div class="carousel-container">
-                            <div class="carousel-slide" id="project-carousel-{{ project.id }}">
-                                {% for image in project.carousel_images %}
-                                <img src="{{ image }}" alt="Smart Gold Choices {{ loop.index0 + 1 }}" class="carousel-image {% if loop.first %}active{% endif %}">
-                                {% endfor %}
-                            </div>
-                            <!-- Navigation Arrows -->
-                            <button class="carousel-btn prev" data-carousel="project-carousel-{{ project.id }}">
-                                <i data-feather="chevron-left"></i>
-                            </button>
-                            <button class="carousel-btn next" data-carousel="project-carousel-{{ project.id }}">
-                                <i data-feather="chevron-right"></i>
-                            </button>
-                            <!-- Carousel Indicators -->
-                            <div class="carousel-indicators">
-                                {% for image in project.carousel_images %}
-                                <span class="indicator {% if loop.first %}active{% endif %}" data-slide="{{ loop.index0 }}"></span>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    {% else %}
-                    <div class="project-image {{ project.image_class }}">
-                        <div class="image-overlay"></div>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
             {% endfor %}
-        </div>
-    </div>
-    
-    <!-- Project Demo Modal -->
-    <div class="modal" id="project-demo-modal">
-        <div class="modal-content glass-card">
-            <div class="modal-header">
-                <h3 id="demo-title">Interactive Demo</h3>
-                <button class="close-modal" title="Return to Profile">
-                    <i data-feather="x"></i>
-                </button>
-            </div>
-            
-            <div class="modal-body">
-                <!-- Carousel Demo Content -->
-                <div class="demo-content carousel-demo" id="carousel-demo">
-                    <div class="carousel-container">
-                        <div class="carousel-slide" id="carousel-slide">
-                            <!-- Carousel images will be populated by JavaScript -->
-                            <img src="/static/images/ai-gallery/colors_app_signup.png" alt="Default image" class="carousel-image active" style="opacity: 1;">
-                        </div>
-                        <button class="carousel-btn prev" id="carousel-prev">
-                            <i data-feather="chevron-left"></i>
-                        </button>
-                        <button class="carousel-btn next" id="carousel-next">
-                            <i data-feather="chevron-right"></i>
-                        </button>
-                        <div class="carousel-indicators" id="carousel-indicators">
-                            <!-- Indicators will be added via JavaScript -->
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Chat Demo Content -->
-                <div class="demo-content chat-demo" id="chat-demo">
-                    <div class="chat-messages" id="chat-messages">
-                        <div class="message system">
-                            <p>Welcome to the AI Assistant demo. Type a message to get started.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="chat-input">
-                        <input type="text" id="chat-input-field" placeholder="Type your message here...">
-                        <button id="send-message-btn">
-                            <i data-feather="send"></i>
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Generator Demo Content -->
-                <div class="demo-content generator-demo" id="generator-demo">
-                    <div class="generator-form">
-                        <div class="form-group">
-                            <label for="content-type">Content Type</label>
-                            <select id="content-type">
-                                <option value="blog">Blog Post</option>
-                                <option value="social">Social Media Post</option>
-                                <option value="email">Email Campaign</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="content-topic">Topic</label>
-                            <input type="text" id="content-topic" placeholder="Enter your topic">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="content-style">Tone/Style</label>
-                            <select id="content-style">
-                                <option value="professional">Professional</option>
-                                <option value="casual">Casual</option>
-                                <option value="enthusiastic">Enthusiastic</option>
-                                <option value="informative">Informative</option>
-                            </select>
-                        </div>
-                        
-                        <button id="generate-content-btn" class="primary-btn">
-                            Generate Content
-                        </button>
-                    </div>
-                    
-                    <div class="generator-output">
-                        <h4>Generated Content</h4>
-                        <div id="generated-content" class="content-display">
-                            <p class="placeholder">Your generated content will appear here...</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Project Details Content -->
-                <div class="demo-content project-details-demo" id="project-details-demo">
-                    <div class="project-details-container">
-                        <div class="project-details-header">
-                            <h4 id="project-details-title"></h4>
-                            <p id="project-details-description"></p>
-                        </div>
-                        
-                        <div class="project-details-section">
-                            <h5>Technology Stack</h5>
-                            <div id="project-details-tech" class="project-tech"></div>
-                        </div>
-                        
-                        <div class="project-details-section">
-                            <h5>Key Features</h5>
-                            <ul id="project-details-highlights"></ul>
-                        </div>
-                        
-                        <div class="project-details-section" id="project-benefits-section">
-                            <h5>Business Benefits</h5>
-                            <ul id="project-details-benefits"></ul>
-                        </div>
-                        
-                        <div class="project-details-section" id="project-partnership-section">
-                            <h5>Partnership Opportunities</h5>
-                            <p id="project-details-partnership"></p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="demo-disclaimer">
-                    <p>Note: This is a simulated demo. In a production environment, these would connect to actual AI models.</p>
-                </div>
-            </div>
         </div>
     </div>
 </section>
