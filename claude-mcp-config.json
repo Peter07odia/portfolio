@@ -4,7 +4,7 @@
       "command": "node",
       "args": ["/Users/ifyodia/Downloads/AiFounderShowcase/mcp-vercel/build/index.js"],
       "env": {
-        "VERCEL_API_TOKEN": "HI5fUkWrWpvk6zWOiwUGKgFh"
+        "VERCEL_API_TOKEN":
       }
     },
     "supabase": {
@@ -16,7 +16,7 @@
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
       "env": {
-        "FIRECRAWL_API_KEY": "fc-dc5823c6804a4f34abf594cb8b2b7154"
+        "FIRECRAWL_API_KEY":
       }
     },
     "docker": {
