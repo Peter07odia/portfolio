@@ -2,7 +2,7 @@
 name = "repl-nix-workspace"
 version = "0.1.0"
 description = "Add your description here"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "email-validator>=2.2.0",
     "flask-mail>=0.10.0",
