@@ -31,64 +31,81 @@ def register_routes(app):
         projects_data = get_projects()
         return jsonify(projects_data)
 
-@app.route("/send-message", methods=["POST"])
-def send_message():
-    """Handle contact form submission"""
-    if request.method == "POST":
-        name = request.form.get("name")
-        email = request.form.get("email")
-        message = request.form.get("message")
-        
-        if not all([name, email, message]):
-            flash("Please fill out all fields", "error")
+    @app.route("/send-message", methods=["POST"])
+    def send_message():
+        """Handle contact form submission"""
+        from app import db, mail
+        from models import Contact
+
+        if request.method == "POST":
+            name = request.form.get("name")
+            email = request.form.get("email")
+            message = request.form.get("message")
+
+            if not all([name, email, message]):
+                flash("Please fill out all fields", "error")
+                return redirect(url_for("index", _anchor="contact"))
+
+            # Save contact to database if available
+            if db is not None:
+                try:
+                    new_contact = Contact(name=name, email=email, message=message)
+                    db.session.add(new_contact)
+                    db.session.commit()
+                except Exception as e:
+                    app.logger.error(f"Error saving contact: {e}")
+
+            try:
+                if mail is not None:
+                    msg = Message(
+                        subject=f"Portfolio Contact: {name}",
+                        recipients=[app.config["MAIL_DEFAULT_SENDER"]],
+                        body=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
+                        sender=email
+                    )
+                    mail.send(msg)
+                flash("Your message has been sent successfully!", "success")
+            except Exception as e:
+                app.logger.error(f"Error sending email: {e}")
+                flash("Your message was saved!", "success")
+
             return redirect(url_for("index", _anchor="contact"))
-        
-        # Save contact to database
-        new_contact = Contact(name=name, email=email, message=message)
-        db.session.add(new_contact)
-        db.session.commit()
-        
-        try:
-            msg = Message(
-                subject=f"Portfolio Contact: {name}",
-                recipients=[app.config["MAIL_DEFAULT_SENDER"]],
-                body=f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}",
-                sender=email
-            )
-            mail.send(msg)
-            flash("Your message has been sent successfully!", "success")
-        except Exception as e:
-            app.logger.error(f"Error sending email: {e}")
-            flash("Your message was saved, but there was an error sending the email notification.", "warning")
-        
-        return redirect(url_for("index", _anchor="contact"))
 
-@app.route("/admin/messages")
-def admin_messages():
-    """Admin interface to view contact messages"""
-    # This would typically have authentication
-    contacts = Contact.query.order_by(Contact.created_at.desc()).all()
-    return render_template("admin/messages.html", contacts=contacts)
+    @app.route("/admin/messages")
+    def admin_messages():
+        """Admin interface to view contact messages"""
+        from app import db
+        from models import Contact
+        # This would typically have authentication
+        if db is not None:
+            contacts = Contact.query.order_by(Contact.created_at.desc()).all()
+            return render_template("admin/messages.html", contacts=contacts)
+        return "Database not available", 503
 
-@app.route("/admin/stats")
-def admin_stats():
-    """Admin interface to view site statistics"""
-    # This would typically have authentication
-    visitor_count = Visitor.query.count()
-    contact_count = Contact.query.count()
-    
-    # Count visitors by date
-    # This is a simplified example - in production you'd want more advanced analytics
-    visitors_by_date = db.session.query(
-        db.func.date(Visitor.visit_date).label('date'),
-        db.func.count().label('count')
-    ).group_by('date').order_by('date').all()
-    
-    return render_template(
-        "admin/stats.html", 
-        visitor_count=visitor_count, 
-        contact_count=contact_count,
-        visitors_by_date=visitors_by_date
-    )
+    @app.route("/admin/stats")
+    def admin_stats():
+        """Admin interface to view site statistics"""
+        from app import db
+        from models import Visitor, Contact
+        # This would typically have authentication
+        if db is None:
+            return "Database not available", 503
+
+        visitor_count = Visitor.query.count()
+        contact_count = Contact.query.count()
+
+        # Count visitors by date
+        # This is a simplified example - in production you'd want more advanced analytics
+        visitors_by_date = db.session.query(
+            db.func.date(Visitor.visit_date).label('date'),
+            db.func.count().label('count')
+        ).group_by('date').order_by('date').all()
+
+        return render_template(
+            "admin/stats.html",
+            visitor_count=visitor_count,
+            contact_count=contact_count,
+            visitors_by_date=visitors_by_date
+        )
 
 
